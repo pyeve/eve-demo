@@ -1,4 +1,4 @@
--e ~/code/eve
+Eve
 Cerberus
 JSON-Datetime
 Flask==0.9
