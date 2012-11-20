@@ -21,26 +21,26 @@
 import os
 
 # We want to seamlessy run ouw API both locally and on Heroku so:
-#if os.environ.get('PORT'):
+if os.environ.get('PORT'):
     # We're hosted on Heroku!
     # Use the MongoHQ sandbox as our backend.
-    #MONGO_HOST = 'app9346575'
-    #MONGO_PORT = 10047
-    #MONGO_USERNAME = 'heroku'
-    #MONGO_PASSWORD = 'eve'
+    MONGO_HOST = 'app9346575'
+    MONGO_PORT = 10047
+    MONGO_USERNAME = 'heroku'
+    MONGO_PASSWORD = 'eve'
 
-    ## also, correctly set the API entry point
-    #SERVER_NAME = 'eve-demo.herokuapp.com'
-#else:
-# Running on local machine.
-# Let's just use the local mongod instance as our backend.
-MONGO_HOST = 'localhost'
-MONGO_PORT = 27017
-MONGO_USERNAME = 'user'
-MONGO_PASSWORD = 'user'
+    # also, correctly set the API entry point
+    SERVER_NAME = 'eve-demo.herokuapp.com'
+else:
+    # Running on local machine.
+    # Let's just use the local mongod instance as our backend.
+    MONGO_HOST = 'localhost'
+    MONGO_PORT = 27017
+    MONGO_USERNAME = 'user'
+    MONGO_PASSWORD = 'user'
 
-# let's not forget the API entry point
-SERVER_NAME = 'localhost:5000'
+    # let's not forget the API entry point
+    SERVER_NAME = 'localhost:5000'
 
 MONGO_DBNAME = 'evedemo'
 
