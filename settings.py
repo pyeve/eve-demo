@@ -26,8 +26,8 @@ if os.environ.get('PORT'):
     # Use the MongoHQ sandbox as our backend.
     MONGO_HOST = 'app9346575'
     MONGO_PORT = 10047
-    MONGO_USERNAME = 'heroku'
-    MONGO_PASSWORD = 'eve'
+    MONGO_USERNAME = 'evedemo'
+    MONGO_PASSWORD = 'evedemo'
 
     # also, correctly set the API entry point
     SERVER_NAME = 'eve-demo.herokuapp.com'
