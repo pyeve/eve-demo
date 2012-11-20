@@ -24,7 +24,7 @@ import os
 if os.environ.get('PORT'):
     # We're hosted on Heroku!
     # Use the MongoHQ sandbox as our backend.
-    MONGO_HOST = 'app9346575'
+    MONGO_HOST = 'alex.mongohq.com:10047/app9346575'
     MONGO_PORT = 10047
     MONGO_USERNAME = 'evedemo'
     MONGO_PASSWORD = 'evedemo'
