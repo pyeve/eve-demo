@@ -24,10 +24,11 @@ import os
 if os.environ.get('PORT'):
     # We're hosted on Heroku!
     # Use the MongoHQ sandbox as our backend.
-    MONGO_HOST = 'alex.mongohq.com:10047/app9346575'
+    MONGO_HOST = 'alex.mongohq.com'
     MONGO_PORT = 10047
     MONGO_USERNAME = 'evedemo'
     MONGO_PASSWORD = 'evedemo'
+    MONGO_DBNAME = 'app9346575'
 
     # also, correctly set the API entry point
     SERVER_NAME = 'eve-demo.herokuapp.com'
@@ -38,11 +39,11 @@ else:
     MONGO_PORT = 27017
     MONGO_USERNAME = 'user'
     MONGO_PASSWORD = 'user'
+    MONGO_DBNAME = 'apitest'
 
     # let's not forget the API entry point
     SERVER_NAME = 'localhost:5000'
 
-MONGO_DBNAME = 'evedemo'
 
 # Enable both reads (GET) and multiple inserts (POST) at resource level
 # (if you omit this line, the API will default to ['GET'] and provide
