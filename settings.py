@@ -46,7 +46,7 @@ else:
 # Enable both reads (GET) and inserts (POST) for resources/collections
 # (if you omit this line, the API will default to ['GET'] and provide
 # read-only access to the endpoint).
-RESOURCE_METHODS = ['GET', 'POST']
+RESOURCE_METHODS = ['GET', 'POST', 'DELETE']
 
 # Enable reads (GET), edits (PATCH) and deletes of individual items
 # (defaults to read-only item access).
@@ -130,9 +130,10 @@ works = {
             'required': True,
         },
         # An optional list of contributors. Each list item is an ObjectId.
-        'contributors': {
-            'type': [{'type': 'objectid'}]
-        },
+        #'contributors': {
+        #    'type': 'list',
+        #    'items': [{'type': 'objectid'}]
+        #},
     }
 }
 DOMAIN = {
