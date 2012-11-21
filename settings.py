@@ -20,10 +20,9 @@
 
 import os
 
-# We want to seamlessy run ouw API both locally and on Heroku so:
+# We want to seamlessy run our API both locally and on Heroku so:
 if os.environ.get('PORT'):
-    # We're hosted on Heroku!
-    # Use the MongoHQ sandbox as our backend.
+    # We're hosted on Heroku!  Use the MongoHQ sandbox as our backend.
     MONGO_HOST = 'alex.mongohq.com'
     MONGO_PORT = 10047
     MONGO_USERNAME = 'evedemo'
@@ -33,8 +32,7 @@ if os.environ.get('PORT'):
     # also, correctly set the API entry point
     SERVER_NAME = 'eve-demo.herokuapp.com'
 else:
-    # Running on local machine.
-    # Let's just use the local mongod instance as our backend.
+    # Running on local machine. Let's just use the local mongod instance.
     MONGO_HOST = 'localhost'
     MONGO_PORT = 27017
     MONGO_USERNAME = 'user'
@@ -45,39 +43,37 @@ else:
     SERVER_NAME = 'localhost:5000'
 
 
-# Enable both reads (GET) and multiple inserts (POST) at resource level
+# Enable both reads (GET) and inserts (POST) for resources/collections
 # (if you omit this line, the API will default to ['GET'] and provide
-# read-only access to the resource endpoint).
+# read-only access to the endpoint).
 RESOURCE_METHODS = ['GET', 'POST']
 
 # Enable reads (GET), edits (PATCH) and deletes of individual items
-# (if you omits this, it will default to read-only item access).
+# (defaults to read-only item access).
 ITEM_METHODS = ['GET', 'PATCH', 'DELETE']
 
 # We enable standard client cache directives for all resources exposed by the
-# API. We can always override these settings later, at resource detail.
+# API. We can always override these global settings later.
 CACHE_CONTROL = 'max-age=20'
 CACHE_EXPIRES = 20
 
-# Our API will expose two resources: 'people' and 'works'.
-# In order to allow for proper data validation, let's define their beaviour
-# and structure (the 'scheme').
-
+# Our API will expose two resources (MongoDB collections): 'people' and
+# 'works'. In order to allow for proper data validation, we define beaviour
+# and structure.
 people = {
-    # the value of the 'title' tag when referencing an individual resource
-    # item in a link.
+    # 'title' tag used in item links.
     'item_title': 'person',
 
     # by default the standard item entry point is defined as
-    # '/people/<ObjectId>'. We leave it untouched, and we also enable an
-    # additional read-only entry point so clients can also use
-    # '/people/person/<lastname>/'.
+    # '/people/<ObjectId>/'. We leave it untouched, and we also enable an
+    # additional read-only entry point. This way consumers can also perform GET
+    # requests at '/people/person/<lastname>/'.
     'additional_lookup': {
         'url': '[\w]+',
         'field': 'lastname'
     },
 
-    # finally, let's define the field schema.
+    # Fields schema definition.
     'schema': {
         'firstname': {
             'type': 'string',
@@ -89,9 +85,8 @@ people = {
             'minlength': 1,
             'maxlength': 15,
             'required': True,
-
-            # talk about hard constraints! But in this demo 'lastname' is also
-            # an item entry-point so we want them to be unique.
+            # talk about hard constraints! For the purpose of the demo
+            # 'lastname' is an API entry-point, so we need it to be unique.
             'unique': True,
         },
         # 'role' is a list, and can only contain values from 'allowed'.
@@ -115,7 +110,7 @@ people = {
 
 works = {
     # if 'item_title' is not provided Eve will just strip the final
-    # 's' from resource name and use if as title, which is fine here.
+    # 's' from resource name, and use it as the item_title.
     #'item_title': 'work',
 
     # We choose to override global cache-control directives for this resource.
