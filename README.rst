@@ -341,7 +341,7 @@ Editing and deleting items
 ::::::::::::::::::::::::::
 
 Concurrency Control
-~~~~~~~~~~~~~~~~~~~
+*******************
 The header provided with the above response contains an ``ETag`` which is very
 important, because etags are mandatory for performing edit and delete
 operations on the items.  Editing happens at item endpoint and is allowed only
