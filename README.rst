@@ -1,8 +1,7 @@
 Eve-Demo
 ========
 
-A fully featured RESTful Web API built, deployed and powered by the
-`Eve Project`_ 
+A fully featured RESTful Web API built, deployed and powered by Eve_ 
                                                        
 Try it live
 -----------
@@ -400,6 +399,6 @@ Right on! This time we got our patch in and the server returned the new ETag.
 We also get the new ``updated`` value, which eventually will allow us to
 perform ``If-Modified-Since`` requests.
 
-.. _Eve Project: https://github.com/nicolaiarocci/eve
+.. _Eve: https://github.com/nicolaiarocci/eve
 .. _Cerberus: https://github.com/nicolaiarocci/cerberus
 .. _settings.py: https://github.com/nicolaiarocci/eve-demo/blob/master/settings.py
