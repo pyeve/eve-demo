@@ -78,14 +78,13 @@ API responded with the default ``Content-Type``: JSON.
     </response>
 
 We requested XML this time. API responses will be rendered in JSON or XML, with
-JSON being the default, depending on the requested mime-type. This behavior is
-provided automatically by any EVe-powered API.
+JSON being the default, depending on the requested mime-type. Again, this
+behavior is provided by any Eve-powered API.
 
 Resource Endpoints
 ------------------
-Besides the API homepage (the entry point), we can of course send requests to
-resource endpoints. We learned from the previous request that there's
-a ``people`` resource available:
+We can of course send requests to resource endpoints. We just learned, with the
+previous request, that there's a ``people`` resource available:
 
 ::
 
@@ -143,7 +142,8 @@ a ``people`` resource available:
         }
     }
 
-Each resource item is provided with some important, additional fields: 
+Each resource item is provided with some important additional fields, all
+handled automatically by the API: 
 
 =========== =================================================================
 Field       Description
@@ -154,12 +154,10 @@ Field       Description
 ``_id``     unique document key, needed to access the indivdual item endpoint
 =========== =================================================================
 
-All these fields are automatically handled by the API. 
-
 Conditional requests
 ::::::::::::::::::::
 In the above response, a ``Last-Modified`` header is included. It can be used later to
-retrieve only the items that have changed since the last request.::
+retrieve only the items that have changed since:::
 
     $ curl -H "If-Modified-Since: Thu, 22 Nov 2012 10:11:12 UTC" -i http://eve-demo.herokuapp.com:5000/
 
@@ -202,12 +200,12 @@ Sorting is supported as well
 
 
 Currently you provide a sort directive by using a pure MongoDB syntax; support
-for a more general syntax (``sort=lastname``) is planned as well.
+for a more general syntax (``sort=lastname``) is planned.
 
 Pagination
 ::::::::::
 In order to save bandwith and resources, pagination is enabled by default. You
-have control on the default page size, and the maximum number of items
+have control on the default page size and the maximum number of items
 per page that the consumer is allowed to request.
 
 ::
@@ -218,8 +216,7 @@ Of course you can mix all the available query parameters
 
 ::
 
-    $ curl -i http://eve-demo.herokuapp.com/people/?where={"lastaname":
-    "Doe"}&sort={"firstname"}&page=5
+    $ curl -i http://eve-demo.herokuapp.com/people/?where={"lastaname": "Doe"}&sort={"firstname"}&page=5
 
 Multiple inserts
 ::::::::::::::::
@@ -247,18 +244,19 @@ inserted with a single request.
         }
     }
 
-The response will contain a status update for each item. If the insertion
-succeeded, item status will include the update/creation date, the new unique id
-and a link to the item endpoint.
+The response will contain a status update for each item inserted. If the
+insertion succeeded, item status will include the update/creation date, the new
+unique id and a link to the item endpoint.
 
 The API mantainer controls wether insertion is allowed. By default, APIs
 are read-only.
 
 Data validation
 ***************
-If an item doesn't validate against the validation rules it won't be inserted.
-All the request is always processed; validation errors on certain items won't
-prevent the insertion of others included in the request.
+An item won't be inserted if it doesn't validate against the validation rules
+set by the API maintainer. The whole the request is always processed, which
+means that eventual validation errors won't prevent insertion of valid
+items.
 
 ::
 
@@ -280,9 +278,9 @@ prevent the insertion of others included in the request.
         }
     }
 
-In the example above, ``item2`` got a validation error and was not inserted,
-while ``item1`` was successfully inserted. API maintainer has complete control
-on data validation. Since Eve validation is based on Cerberus_, it is also
+In the example above, ``item2`` got a validation error and got reject, while
+``item1`` was successfully inserted. API maintainer has complete control on
+data validation. Since Eve validation is based on Cerberus_, it is also
 possible to extend the system to suit specific use cases. Check out the
 settings.py_ module used in this demo to get an idea of how data structures are
 configured.
@@ -301,15 +299,15 @@ is just a matter of setting the appropriate value in the configuration module.
 
 Item Endpoints
 --------------
-Item endpoints are accessed by combining the parent resource URI and the item
-unique key.
+Item endpoints are accessed by combining parent resource URI and item unique
+key.
 
 ::
 
     $ curl -i http://eve-demo.herokuapp.com/people/50acfba938345b0978fccad7/
 
 If enabled by the API mantainer, it is also possibile to access the same item
-with a secondary field value:
+with a secondary field value (in our case, ``lastname``):
 
 ::
 
@@ -353,7 +351,7 @@ Concurrency Control
 *******************
 The header provided with the above response contains an ``ETag`` which is very
 important, because etags are mandatory for performing edit and delete
-operations on the items.  Editing happens at item endpoint and is allowed only
+operations on items. Editing happens at item endpoint and is allowed only
 if the request includes an ``ETag`` matching the current representation of the
 item on the server. This prevents overwriting the current item with obsolete
 versions.
@@ -369,8 +367,8 @@ versions.
     <h1>Forbidden</h1>
     <p>You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.</p>
 
-We did not provide an ETag for the item we are attempting to edit so we got
-a nice 403 back. Let's try again:
+We did not provide an ETag for the item, so we got
+a not-so-nice 403 ``FORBIDDEN`` as response. Let's try again:
 
 ::
 
@@ -384,7 +382,7 @@ a nice 403 back. Let's try again:
 
 What went wrong this time? We did provide the mandatory ``If-Match`` header,
 but it's value did not match the ETag computed on the representation of the
-item on the server, which granted us a 412. Again!
+item on the server, which granted us a 412 ``PRECONDITION FAILED``. Again!
 
 ::
 
@@ -414,7 +412,12 @@ perform ``If-Modified-Since`` requests.
 Wrapping it up
 --------------
 Check out the settings.py_ module used in this demo to get an idea of how
-configuration is handled by the API maintainer.
+configuration is handled by the API maintainer. Also don't forget to visit Eve_
+repository or, if you need a gentle introduction to the wondeful world of
+RESTful WEB APIs, check out my EuroPython 2012 talk: `Developing RESTful Web
+APIs with Python, Flask and MongoDB
+<https://speakerdeck.com/nicola/developing-restful-web-apis-with-python-flask-and-mongodb>`_
+- *thank you*.
 
 .. _Eve: https://github.com/nicolaiarocci/eve
 .. _Cerberus: https://github.com/nicolaiarocci/cerberus
