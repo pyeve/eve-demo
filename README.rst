@@ -411,8 +411,8 @@ perform ``If-Modified-Since`` requests.
 
 Local install
 -------------
-If you want to install this app locally create a virtualenv environment and,
-once activated, install Eve:
+If you want to play with this app locally create a virtualenv environment and
+once activated install Eve:
 
 ::
 
@@ -423,15 +423,15 @@ Then, just clone this repository:
 
     git clone https://github.com/nicolaiarocci/eve-demo.git
     
-Of course if you want to run the API locally you will also need a local
-instance of MongoDB server running, and ajust the settings module accordingly.
-To run the API:
+Of course you need a local instance of MongoDB running, and don't forget to
+ajust the settings.py_ module accordingly.  Launching the API is
+straightforward:
 
 ::
 
     python run.py
 
-That's all.
+Have fun!
 
 Wrapping it up
 --------------
