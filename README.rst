@@ -1,16 +1,19 @@
 Eve-Demo
 ========
 
-A fully featured RESTful Web API built, deployed and powered by Eve_ 
+A fully featured RESTful Web API built, deployed and powered by Eve_. 
+
+With Eve, setting up an API is very simple. You just need a launch script
+(run.py_) and a configuration module (settings.py_).
                                                        
-Try it live
------------
+Try it live 
+----------- 
 An instance of this code is running live at http://eve-demo.herokuapp.com. You
 can consume the API by using cURL (see the examples below) or, if you are on
 Chrome, you might want to give a shot at the phenomenal Advanced REST Client
 extension.
 
-API entry point
+API Entry Point
 ---------------
 A ``GET`` request sent to the API entry point will provide a list of available
 resources.
@@ -282,7 +285,7 @@ while ``item1`` was successfully inserted. API maintainer has complete control
 on data validation. Since Eve validation is based on Cerberus_, it is also
 possible to extend the system to suit specific use cases. Check out the
 settings.py_ module used in this demo to get an idea of how data structures are
-configured in any Eve-powered API.
+configured.
 
 Resource Deletion
 *****************
@@ -408,6 +411,12 @@ Right on! This time we got our patch in and the server returned the new ETag.
 We also get the new ``updated`` value, which eventually will allow us to
 perform ``If-Modified-Since`` requests.
 
+Wrapping it up
+--------------
+Check out the settings.py_ module used in this demo to get an idea of how
+configuration is handled by the API maintainer.
+
 .. _Eve: https://github.com/nicolaiarocci/eve
 .. _Cerberus: https://github.com/nicolaiarocci/cerberus
+.. _run.py: https://github.com/nicolaiarocci/eve-demo/blob/master/run.py
 .. _settings.py: https://github.com/nicolaiarocci/eve-demo/blob/master/settings.py
