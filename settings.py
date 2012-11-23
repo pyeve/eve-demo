@@ -46,7 +46,9 @@ else:
 # Enable both reads (GET) and inserts (POST) for resources/collections
 # (if you omit this line, the API will default to ['GET'] and provide
 # read-only access to the endpoint).
-RESOURCE_METHODS = ['GET', 'POST', 'DELETE']
+RESOURCE_METHODS = ['GET', 'POST']
+# DELETE method supported only by Eve 0.0.2 which is not available on PyPI yet
+#RESOURCE_METHODS = ['GET', 'POST', 'DELETE']
 
 # Enable reads (GET), edits (PATCH) and deletes of individual items
 # (defaults to read-only item access).
