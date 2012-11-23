@@ -142,3 +142,14 @@ a ``people`` resource available:
 
 Each resource item is provided with some important, additional fields: 
 
+=========== =================================================================
+Field       Description
+=========== =================================================================
+``created`` document creation date
+``updated`` document last update
+``etag``    ETag to be used for concurrency control and conditional requests. 
+``_id``     unique document key, needed to access the indivdual item endpoint
+=======     =================================================================
+
+All these fields are automatically handled by the API. 
+
