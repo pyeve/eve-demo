@@ -409,6 +409,30 @@ Right on! This time we got our patch in and the server returned the new ETag.
 We also get the new ``updated`` value, which eventually will allow us to
 perform ``If-Modified-Since`` requests.
 
+Local install
+-------------
+If you want to install this app locally create a virtualenv environment and,
+once activated, install Eve:
+
+::
+
+    $ pip install eve
+Then, just clone this repository:
+
+::
+
+    git clone https://github.com/nicolaiarocci/eve-demo.git
+    
+Of course if you want to run the API locally you will also need a local
+instance of MongoDB server running, and ajust the settings module accordingly.
+To run the API:
+
+::
+
+    python run.py
+
+That's all.
+
 Wrapping it up
 --------------
 Check out the settings.py_ module used in this demo to get an idea of how
