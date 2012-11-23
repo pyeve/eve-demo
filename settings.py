@@ -39,7 +39,7 @@ else:
     MONGO_PASSWORD = 'user'
     MONGO_DBNAME = 'apitest'
 
-    # let's not forget the API entry point
+        # let's not forget the API entry point
     SERVER_NAME = 'localhost:5000'
 
 
@@ -129,11 +129,6 @@ works = {
             'type': 'objectid',
             'required': True,
         },
-        # An optional list of contributors. Each list item is an ObjectId.
-        #'contributors': {
-        #    'type': 'list',
-        #    'items': [{'type': 'objectid'}]
-        #},
     }
 }
 DOMAIN = {
