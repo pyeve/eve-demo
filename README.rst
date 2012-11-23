@@ -182,6 +182,7 @@ Eve-powered APIs support several kinds of conditional requests. Besides the
 supported query syntaxes, the MongoDB query syntax
 
 ::
+
     $ curl -i http://eve-demo.herokuapp.com/people/?where={"lastname": "Doe"}
 
 and the native Python syntax
@@ -213,6 +214,7 @@ per page that the consumer is allowed to request.
 Of course you can mix all the available query parameters
 
 ::
+
     $ curl -i http://eve-demo.herokuapp.com/people/?where={"lastaname":
     "Doe"}&sort={"firstname"}&page=5
 
@@ -222,6 +224,7 @@ Insertion is done at the resource endpoint via POST. Multiple items can be
 inserted with a single request. 
 
 ::
+
     curl -d 'item1={"firstname": "barack", "lastname": "obama"}' -d 'item2={"firstname": "mitt", "lastname": "romney"}' http://eve-demo.herokuapp.com/people/
 
     {
@@ -287,6 +290,7 @@ If enabled by the maintainer, an Eve-powered API will also allow deletion of
 the whole content of a resource.
 
 ::
+
     $ curl -X DELETE http://eve-demo.herokuapp.com/people/
 
 Again, Eve-powered APIs are read-only by default. Enabling/disabling features
@@ -298,12 +302,14 @@ Item endpoints are accessed by combining the parent resource URI and the item
 unique key.
 
 ::
+
     $ curl -i http://eve-demo.herokuapp.com/people/50acfba938345b0978fccad7/
 
 If enabled by the API mantainer, it is also possibile to access the same item
 with a secondary field value:
 
 ::
+
     $ curl -i http://eve-demo.herokuapp.com/people/Doe/
 
     HTTP/1.0 200 OK
@@ -350,6 +356,7 @@ item on the server. This prevents overwriting the current item with obsolete
 versions.
 
 ::
+
     $ curl -X PATCH -i http://localhost:5000/people/50adfa4038345b1049c88a37/ -d 'data={"firstname": "ronald"}'
 
     HTTP/1.0 403 FORBIDDEN
@@ -363,6 +370,7 @@ We did not provide an ETag for the item we are attempting to edit so we got
 a nice 403 back. Let's try again:
 
 ::
+
     $ curl -H "If-Match: 1234567890123456789012345678901234567890" -X PATCH -i http://localhost:5000/people/50adfa4038345b1049c88a37/ -d 'data={"firstname": "ronald"}'
 
     HTTP/1.0 412 PRECONDITION FAILED
@@ -376,6 +384,7 @@ but it's value did not match the ETag computed on the representation of the
 item on the server, which granted us a 412. Again!
 
 ::
+
     $ curl -H "If-Match: 80b81f314712932a4d4ea75ab0b76a4eea613012" -X PATCH -i http://localhost:5000/people/50adfa4038345b1049c88a37/ -d 'data={"firstname": "ronald"}'
 
     HTTP/1.0 200 OK
