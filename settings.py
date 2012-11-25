@@ -75,7 +75,8 @@ people = {
         'field': 'lastname'
     },
 
-    # Fields schema definition.
+    # Schema definition, based on Cerberus grammar. Check the Cerberus project
+    # (https://github.com/nicolaiarocci/cerberus) for details.
     'schema': {
         'firstname': {
             'type': 'string',
@@ -133,6 +134,9 @@ works = {
         },
     }
 }
+
+# The DOMAIN dict explains which resources will be available and how they will
+# be accessible to the API consumer.
 DOMAIN = {
     'people': people,
     'works': works,
