@@ -1,4 +1,4 @@
-Eve
+Eve==0.0.2
 Cerberus
 JSON-Datetime
 Flask==0.9
