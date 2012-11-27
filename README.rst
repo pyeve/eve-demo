@@ -11,7 +11,8 @@ Try it live
 An instance of this code is running live at http://eve-demo.herokuapp.com. You
 can consume the API by using cURL (see the examples below) or, if you are on
 Chrome, you might want to give a shot at the phenomenal Advanced REST Client
-extension.
+extension (accessing with a browser will likely get you errors - working on
+it).
 
 API Entry Point
 ---------------
