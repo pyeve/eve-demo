@@ -13,6 +13,11 @@ can consume the API by using cURL (see the examples below) or, if you are on
 Chrome, you might want to give a shot at the phenomenal Advanced REST Client
 extension.
 
+There is also a sample client application available. It uses the phenomenal
+Requests library to consume the demo API. In fact, it has been quickly hacked
+togheter to reset the API every once in a while. Check it out at
+https://github.com/nicolaiarocci/eve-demo-client.
+ 
 API Entry Point
 ---------------
 A ``GET`` request sent to the API entry point will provide a list of available
