@@ -39,11 +39,11 @@ else:
     MONGO_PASSWORD = 'user'
     MONGO_DBNAME = 'apitest'
 
-        # let's not forget the API entry point
+    # let's not forget the API entry point
     SERVER_NAME = 'localhost:5000'
 
 
-# Enable both reads (GET) and inserts (POST) for resources/collections
+# Enable reads (GET), inserts (POST) and DELETE for resources/collections
 # (if you omit this line, the API will default to ['GET'] and provide
 # read-only access to the endpoint).
 RESOURCE_METHODS = ['GET', 'POST', 'DELETE']

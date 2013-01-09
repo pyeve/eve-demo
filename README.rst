@@ -10,16 +10,15 @@ Try it live
 ----------- 
 An instance of this code is running live at http://eve-demo.herokuapp.com. You
 can consume the API by using cURL (see the examples below) or, if you are on
-Chrome, you might want to give a shot at the phenomenal Advanced REST Client
-extension.
+Chrome, you might want to give a shot at the Advanced REST Client extension.
 
-There is also a sample client application available. It uses the phenomenal
-Requests library to consume the demo API. In fact, it has been quickly hacked
-togheter to reset the API every once in a while. Check it out at
+There is also a sample client application available. It uses the Requests
+library to consume the demo API. In fact, it has been quickly hacked togheter
+to reset the API every once in a while. Check it out at
 https://github.com/nicolaiarocci/eve-demo-client.
  
-API Entry Point
----------------
+API Entry Point 
+--------------- 
 A ``GET`` request sent to the API entry point will provide a list of available
 resources.
 
@@ -47,20 +46,19 @@ resources.
     }
     
     
-Each link provides two tag: ``rel``, explaining the relation between the linked
-resource and current endpoint, and ``title``, containing the linked resource
-name. Togheter, these two informations allow the client to eventually update
-its UI and/or transverse the API without prior knoweledge of its structure.
-HATEOAS is at work here. A ``links`` section is included with every response
-provided by any Eve-powered API.
+Each link provides two tags: ``rel``, explaining the relation between the
+linked resource and current endpoint, and ``title``, containing the linked
+resource name. Togheter these two informations allow the client to eventually
+update its UI and/or transverse the API without any prior knoweledge of its
+structure.  It's HATEOAS at work here. A ``links`` section is included with
+every response provided by any Eve-powered API (since Eve v0.0.3 HATEOAS can
+also be disabled).
 
 Cache Control
 :::::::::::::
-Also notice how the response header contains cache-control directives
+Notice how the response header contains cache-control directives
 (``Cache-Control``, ``Expires``). Any Eve-powered API can easily control the
-values of these directives. It is possibile to setup a global value for both,
-and it is also possible to override the global settings for individual resource
-endpoints.  
+values of these, both at global and individual endpoint level.
 
 JSON and XML rendering
 ::::::::::::::::::::::
@@ -77,19 +75,18 @@ API responded with the default ``Content-Type``: JSON.
 
     <response>
         <links>
-            <link><link rel='child' title='works' href='localhost:5000/works/' /></link>
-            <link><link rel='child' title='people' href='localhost:5000/people/' /></link>
+            <link><link rel='child' title='works' href='eve-demo.herokuapp.com/works/' /></link>
+            <link><link rel='child' title='people' href='eve-demo.herokuapp.com/people/' /></link>
         </links>
     </response>
 
-We requested XML this time. API responses will be rendered in JSON or XML, with
-JSON being the default, depending on the requested mime-type. Again, this
-behavior is provided by any Eve-powered API.
+We requested XML this time. API responses will be rendered in JSON or XML
+depending on the requested mime-type. 
 
 Resource Endpoints
 ------------------
-We can of course send requests to resource endpoints. We just learned, with the
-previous request, that there's a ``people`` resource available:
+We can of course send requests to resource endpoints. With the previous request
+we learned that there is a ``people`` resource available:
 
 ::
 
@@ -102,8 +99,8 @@ previous request, that there's a ``people`` resource available:
     {
         "response": {
             "links": [
-                "<link rel='parent' title='home' href='localhost:5000' />",
-                "<link rel='collection' title='people' href='localhost:5000/people/' />"
+                "<link rel='parent' title='home' href='eve-demo.herokuapp.com' />",
+                "<link rel='collection' title='people' href='eve-demo.herokuapp.com/people/' />"
             ],
             "people": [
                 {
@@ -121,7 +118,7 @@ previous request, that there's a ``people`` resource available:
                         "city": "New York",
                         "address": "4925 Lacross Road"
                     },
-                    "link": "<link rel='self' title='person' href='localhost:5000/people/50adfa4038345b1049c88a37/' />",
+                    "link": "<link rel='self' title='person' href='eve-demo.herokuapp.com/people/50adfa4038345b1049c88a37/' />",
                     "_id": "50adfa4038345b1049c88a37"
                 },
                 {
@@ -139,7 +136,7 @@ previous request, that there's a ``people`` resource available:
                         "city": "Ashfield",
                         "address": "32 Joseph Street"
                     },
-                    "link": "<link rel='self' title='person' href='localhost:5000/people/50adfa4038345b1049c88a38/' />",
+                    "link": "<link rel='self' title='person' href='eve-demo.herokuapp.com/people/50adfa4038345b1049c88a38/' />",
                     "_id": "50adfa4038345b1049c88a38"
                 },
                 ( ... )
@@ -148,7 +145,7 @@ previous request, that there's a ``people`` resource available:
     }
 
 Each resource item is provided with some important additional fields, all
-handled automatically by the API: 
+automatically handled by the API: 
 
 =========== =================================================================
 Field       Description
@@ -161,8 +158,10 @@ Field       Description
 
 Conditional requests
 ::::::::::::::::::::
-In the above response, a ``Last-Modified`` header is included. It can be used later to
-retrieve only the items that have changed since:::
+In the above response, a ``Last-Modified`` header is included. It can be used
+later to retrieve only the items that have changed since:
+
+::
 
     $ curl -H "If-Modified-Since: Thu, 22 Nov 2012 10:11:12 UTC" -i http://eve-demo.herokuapp.com:5000/
 
@@ -172,52 +171,51 @@ retrieve only the items that have changed since:::
     {
         "response": {
             "links": [
-                "<link rel='child' title='works' href='localhost:5000/works/' />",
-                "<link rel='child' title='people' href='localhost:5000/people/' />"
+                "<link rel='child' title='works' href='eve-demo.herokuapp.com/works/' />",
+                "<link rel='child' title='people' href='eve-demo.herokuapp.com/people/' />"
             ]
         }
     }
 
-This time we didn't get any item back, as none has been changed since
-our previous request. 
+This time we didn't get any item back, as none has changed since the previous
+request. 
 
 Filtering and sorting
 :::::::::::::::::::::
 Eve-powered APIs support several kinds of conditional requests. Besides the
 ``If-Modified-Since`` header, you can also submit queries. There are two
-supported query syntaxes, the MongoDB query syntax
+supported query syntaxes, the MongoDB query syntax:
 
 ::
 
     $ curl -i http://eve-demo.herokuapp.com/people/?where={"lastname": "Doe"}
 
-and the native Python syntax
+and the native Python syntax:
 
 ::
 
     $ curl -i http://eve-demo.herokuapp.com/people/?where=lastname=="Doe"
 
-Sorting is supported as well
+Sorting is supported as well:
 
 ::
 
     $ curl -i http://eve-demo.herokuapp.com/people/?sort={"lastname": -1}
 
 
-Currently you provide a sort directive by using a pure MongoDB syntax; support
-for a more general syntax (``sort=lastname``) is planned.
+Currently sort directives use a pure MongoDB syntax; support for a more general
+syntax (``sort=lastname``) is planned.
 
 Pagination
 ::::::::::
 In order to save bandwith and resources, pagination is enabled by default. You
-have control on the default page size and the maximum number of items
-per page that the consumer is allowed to request.
+have control on the default page size and the maximum number of items per page.
 
 ::
 
     $ curl -i http://eve-demo.herokuapp.com/people/?max_results=20&page=2
 
-Of course you can mix all the available query parameters
+Of course you can mix all the available query parameters:
 
 ::
 
@@ -283,8 +281,8 @@ items.
         }
     }
 
-In the example above, ``item2`` got a validation error and got reject, while
-``item1`` was successfully inserted. API maintainer has complete control on
+In the example above, ``item2`` did not validate and was rejected, while
+``item1`` was successfully created. API maintainer has complete control on
 data validation. Since Eve validation is based on Cerberus_, it is also
 possible to extend the system to suit specific use cases. Check out the
 settings.py_ module used in this demo to get an idea of how data structures are
@@ -355,15 +353,15 @@ Editing and deleting items
 Concurrency Control
 *******************
 The header provided with the above response contains an ``ETag`` which is very
-important, because etags are mandatory for performing edit and delete
-operations on items. Editing happens at item endpoint and is allowed only
-if the request includes an ``ETag`` matching the current representation of the
-item on the server. This prevents overwriting the current item with obsolete
+important because etags are mandatory for performing edit and delete
+operations on items. Editing happens at the item endpoint and is allowed only
+if the request includes an ``ETag`` that matches the current representation
+stored on the server. This prevents overwriting the items with obsolete
 versions.
 
 ::
 
-    $ curl -X PATCH -i http://localhost:5000/people/50adfa4038345b1049c88a37/ -d 'data={"firstname": "ronald"}'
+    $ curl -X PATCH -i http://eve-demo.herokuapp.com/people/50adfa4038345b1049c88a37/ -d 'data={"firstname": "ronald"}'
 
     HTTP/1.0 403 FORBIDDEN
 
@@ -372,12 +370,12 @@ versions.
     <h1>Forbidden</h1>
     <p>You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.</p>
 
-We did not provide an ETag for the item, so we got
-a not-so-nice 403 ``FORBIDDEN`` as response. Let's try again:
+We did not provide an ETag for the item so we got a not-so-nice ``403
+FORBIDDEN``. Let's try again:
 
 ::
 
-    $ curl -H "If-Match: 1234567890123456789012345678901234567890" -X PATCH -i http://localhost:5000/people/50adfa4038345b1049c88a37/ -d 'data={"firstname": "ronald"}'
+    $ curl -H "If-Match: 1234567890123456789012345678901234567890" -X PATCH -i http://eve-demo.herokuapp.com/people/50adfa4038345b1049c88a37/ -d 'data={"firstname": "ronald"}'
 
     HTTP/1.0 412 PRECONDITION FAILED
 
@@ -386,12 +384,12 @@ a not-so-nice 403 ``FORBIDDEN`` as response. Let's try again:
     <h1>Precondition Failed</h1>
 
 What went wrong this time? We did provide the mandatory ``If-Match`` header,
-but it's value did not match the ETag computed on the representation of the
-item on the server, which granted us a 412 ``PRECONDITION FAILED``. Again!
+but it did not match the ETag computed on the representation of the current
+item, so we got a ``402 PRECONDITION FAILED``. Again!
 
 ::
 
-    $ curl -H "If-Match: 80b81f314712932a4d4ea75ab0b76a4eea613012" -X PATCH -i http://localhost:5000/people/50adfa4038345b1049c88a37/ -d 'data={"firstname": "ronald"}'
+    $ curl -H "If-Match: 80b81f314712932a4d4ea75ab0b76a4eea613012" -X PATCH -i http://eve-demo.herokuapp.com/people/50adfa4038345b1049c88a37/ -d 'data={"firstname": "ronald"}'
 
     HTTP/1.0 200 OK
     ETag: 372fbbebf54dfe61742556f17a8461ca9a6f5a11
@@ -404,13 +402,13 @@ item on the server, which granted us a 412 ``PRECONDITION FAILED``. Again!
                 "status": "OK",
                 "updated": "Fri, 23 Nov 2012 08:11:19 UTC",
                 "_id": "50adfa4038345b1049c88a37",
-                "link": "<link rel='self' title='person' href='localhost:5000/people/50adfa4038345b1049c88a37/' />",
+                "link": "<link rel='self' title='person' href='eve-demo.herokuapp.com/people/50adfa4038345b1049c88a37/' />",
                 "etag": "372fbbebf54dfe61742556f17a8461ca9a6f5a11"
             }
         }
     }
 
-Right on! This time we got our patch in and the server returned the new ETag.
+Right on! This time we got our patch in, and the server returned the new ETag.
 We also get the new ``updated`` value, which eventually will allow us to
 perform ``If-Modified-Since`` requests.
 
@@ -441,8 +439,8 @@ Have fun!
 Wrapping it up
 --------------
 Check out the settings.py_ module used in this demo to get an idea of how
-configuration is handled by the API maintainer. Also don't forget to visit Eve_
-repository or, if you need a gentle introduction to the wondeful world of
+configuration is handled. Also don't forget to visit Eve_
+repository and, if you need a gentle introduction to the wondeful world of
 RESTful WEB APIs, check out my EuroPython 2012 talk: `Developing RESTful Web
 APIs with Python, Flask and MongoDB
 <https://speakerdeck.com/nicola/developing-restful-web-apis-with-python-flask-and-mongodb>`_
