@@ -36,13 +36,11 @@ resources.
     Connection: keep-alive    
     
     
-    {
-        "response": {
-            "links": [
-                "<link rel='child' title='works' href='eve-demo.herokuapp.com/works/' />", 
-                "<link rel='child' title='people' href='eve-demo.herokuapp.com/people/' />"
-                ]
-            }
+    { 
+        "links": [ 
+            "<link rel='child' title='works' href='eve-demo.herokuapp.com/works/' />",
+            "<link rel='child' title='people' href='eve-demo.herokuapp.com/people/' />" 
+        ] 
     }
     
     
@@ -50,9 +48,8 @@ Each link provides two tags: ``rel``, explaining the relation between the
 linked resource and current endpoint, and ``title``, containing the linked
 resource name. Togheter these two informations allow the client to eventually
 update its UI and/or transverse the API without any prior knoweledge of its
-structure.  It's HATEOAS at work here. A ``links`` section is included with
-every response provided by any Eve-powered API (since Eve v0.0.3 HATEOAS can
-also be disabled).
+structure. HATEOAS is at work here: a ``links`` section is included with
+every response provided by any Eve-powered API.
 
 Cache Control
 :::::::::::::
@@ -97,51 +94,49 @@ we learned that there is a ``people`` resource available:
     (...)
 
     {
-        "response": {
-            "links": [
-                "<link rel='parent' title='home' href='eve-demo.herokuapp.com' />",
-                "<link rel='collection' title='people' href='eve-demo.herokuapp.com/people/' />"
-            ],
-            "people": [
-                {
-                    "updated": "Thu, 22 Nov 2012 10:11:12 UTC",
-                    "firstname": "Mark",
-                    "created": "Thu, 22 Nov 2012 10:11:12 UTC",
-                    "lastname": "Green",
-                    "born": "Sat, 23 Feb 1985 12:00:00 UTC",
-                    "etag": "77b0a15eaa65027685fe21482937ac2e185c695f",
-                    "role": [
-                        "copy",
-                        "author"
-                    ],
-                    "location": {
-                        "city": "New York",
-                        "address": "4925 Lacross Road"
-                    },
-                    "link": "<link rel='self' title='person' href='eve-demo.herokuapp.com/people/50adfa4038345b1049c88a37/' />",
-                    "_id": "50adfa4038345b1049c88a37"
+        "links": [
+            "<link rel='parent' title='home' href='eve-demo.herokuapp.com' />",
+            "<link rel='collection' title='people' href='eve-demo.herokuapp.com/people/' />"
+        ],
+        "items": [
+            {
+                "updated": "Thu, 22 Nov 2012 10:11:12 UTC",
+                "firstname": "Mark",
+                "created": "Thu, 22 Nov 2012 10:11:12 UTC",
+                "lastname": "Green",
+                "born": "Sat, 23 Feb 1985 12:00:00 UTC",
+                "etag": "77b0a15eaa65027685fe21482937ac2e185c695f",
+                "role": [
+                    "copy",
+                    "author"
+                ],
+                "location": {
+                    "city": "New York",
+                    "address": "4925 Lacross Road"
                 },
-                {
-                    "updated": "Thu, 22 Nov 2012 10:11:12 UTC",
-                    "firstname": "Anne",
-                    "created": "Thu, 22 Nov 2012 10:11:12 UTC",
-                    "lastname": "White",
-                    "born": "Fri, 25 Sep 1970 10:00:00 UTC",
-                    "etag": "990ea0b937347269d43f748179be67062f1417d5",
-                    "role": [
-                        "contributor",
-                        "copy"
-                    ],
-                    "location": {
-                        "city": "Ashfield",
-                        "address": "32 Joseph Street"
-                    },
-                    "link": "<link rel='self' title='person' href='eve-demo.herokuapp.com/people/50adfa4038345b1049c88a38/' />",
-                    "_id": "50adfa4038345b1049c88a38"
+                "link": "<link rel='self' title='person' href='eve-demo.herokuapp.com/people/50adfa4038345b1049c88a37/' />",
+                "_id": "50adfa4038345b1049c88a37"
+            },
+            {
+                "updated": "Thu, 22 Nov 2012 10:11:12 UTC",
+                "firstname": "Anne",
+                "created": "Thu, 22 Nov 2012 10:11:12 UTC",
+                "lastname": "White",
+                "born": "Fri, 25 Sep 1970 10:00:00 UTC",
+                "etag": "990ea0b937347269d43f748179be67062f1417d5",
+                "role": [
+                    "contributor",
+                    "copy"
+                ],
+                "location": {
+                    "city": "Ashfield",
+                    "address": "32 Joseph Street"
                 },
-                ( ... )
+                "link": "<link rel='self' title='person' href='eve-demo.herokuapp.com/people/50adfa4038345b1049c88a38/' />",
+                "_id": "50adfa4038345b1049c88a38"
+            },
+            ( ... )
             ]
-        }
     }
 
 Each resource item is provided with some important additional fields, all
@@ -163,18 +158,17 @@ later to retrieve only the items that have changed since:
 
 ::
 
-    $ curl -H "If-Modified-Since: Thu, 22 Nov 2012 10:11:12 UTC" -i http://eve-demo.herokuapp.com:5000/
+    $ curl -H "If-Modified-Since: Thu, 22 Nov 2012 10:11:12 UTC" -i http://eve-demo.herokuapp.com:5000/people/
 
     HTTP/1.0 200 OK
     ( ... )
 
     {
-        "response": {
-            "links": [
-                "<link rel='child' title='works' href='eve-demo.herokuapp.com/works/' />",
-                "<link rel='child' title='people' href='eve-demo.herokuapp.com/people/' />"
-            ]
-        }
+        "items": [],
+        "links": [
+            "<link rel='child' title='works' href='eve-demo.herokuapp.com/works/' />",
+            "<link rel='child' title='people' href='eve-demo.herokuapp.com/people/' />"
+        ]
     }
 
 This time we didn't get any item back, as none has changed since the previous
@@ -231,19 +225,17 @@ inserted with a single request.
     curl -d 'item1={"firstname": "barack", "lastname": "obama"}' -d 'item2={"firstname": "mitt", "lastname": "romney"}' http://eve-demo.herokuapp.com/people/
 
     {
-        "response": {
-            "item2": {
-                "status": "OK",
-                "updated": "Thu, 22 Nov 2012 15:22:27 UTC",
-                "_id": "50ae43339fa12500024def5b",
-                "link": "<link rel='self' title='person' href='eve-demo.herokuapp.com/people/50ae43339fa12500024def5b/' />"
-            },
-            "item1": {
-                "status": "OK",
-                "updated": "Thu, 22 Nov 2012 15:22:27 UTC",
-                "_id": "50ae43339fa12500024def5c",
-                "link": "<link rel='self' title='person' href='eve-demo.herokuapp.com/people/50ae43339fa12500024def5c/' />"
-            }
+        "item2": {
+            "status": "OK",
+            "updated": "Thu, 22 Nov 2012 15:22:27 UTC",
+            "_id": "50ae43339fa12500024def5b",
+            "link": "<link rel='self' title='person' href='eve-demo.herokuapp.com/people/50ae43339fa12500024def5b/' />"
+        },
+        "item1": {
+            "status": "OK",
+            "updated": "Thu, 22 Nov 2012 15:22:27 UTC",
+            "_id": "50ae43339fa12500024def5c",
+            "link": "<link rel='self' title='person' href='eve-demo.herokuapp.com/people/50ae43339fa12500024def5c/' />"
         }
     }
 
@@ -265,19 +257,17 @@ items.
 
     curl -d 'item1={"firstname": "bill", "lastname": "clinton"}' -d 'item2={"firstname": "mitt", "lastname": "romney"}' http://eve-demo.herokuapp.com/people/
     {
-        "response": {
-            "item2": {
-                "status": "ERR",
-                "issues": [
-                    "value 'romney' for field 'lastname' not unique"
-                ]
-            },
-            "item1": {
-                "status": "OK",
-                "updated": "Thu, 22 Nov 2012 15:29:08 UTC",
-                "_id": "50ae44c49fa12500024def5d",
-                "link": "<link rel='self' title='person' href='eve-demo.herokuapp.com/people/50ae44c49fa12500024def5d/' />"
-            }
+        "item2": {
+            "status": "ERR",
+            "issues": [
+                "value 'romney' for field 'lastname' not unique"
+            ]
+        },
+        "item1": {
+            "status": "OK",
+            "updated": "Thu, 22 Nov 2012 15:29:08 UTC",
+            "_id": "50ae44c49fa12500024def5d",
+            "link": "<link rel='self' title='person' href='eve-demo.herokuapp.com/people/50ae44c49fa12500024def5d/' />"
         }
     }
 
@@ -322,27 +312,25 @@ with a secondary field value (in our case, ``lastname``):
     ( ... )
 
     {
-        "response": {
-            "links": [
-                "<link rel='parent' title='home' href='eve-demo.herokuapp.com' />",
-                "<link rel='collection' title='people' href='eve-demo.herokuapp.com/people/' />"
+        "links": [
+            "<link rel='parent' title='home' href='eve-demo.herokuapp.com' />",
+            "<link rel='collection' title='people' href='eve-demo.herokuapp.com/people/' />"
+        ],
+        "item": {
+            "updated": "Wed, 21 Nov 2012 16:04:56 UTC",
+            "firstname": "John",
+            "created": "Wed, 21 Nov 2012 16:04:56 UTC",
+            "lastname": "Doe",
+            "born": "Thu, 27 Aug 1970 14:37:13 UTC",
+            "role": [
+                "author"
             ],
-            "people": {
-                "updated": "Wed, 21 Nov 2012 16:04:56 UTC",
-                "firstname": "John",
-                "created": "Wed, 21 Nov 2012 16:04:56 UTC",
-                "lastname": "Doe",
-                "born": "Thu, 27 Aug 1970 14:37:13 UTC",
-                "role": [
-                    "author"
-                ],
-                "location": {
-                    "city": "Auburn",
-                    "address": "422 South Gay Street"
-                },
-                "link": "<link rel='self' title='person' href='eve-demo.herokuapp.com/people/50acfba938345b0978fccad7/' />",
-                "_id": "50acfba938345b0978fccad7"
-            }
+            "location": {
+                "city": "Auburn",
+                "address": "422 South Gay Street"
+            },
+            "link": "<link rel='self' title='person' href='eve-demo.herokuapp.com/people/50acfba938345b0978fccad7/' />",
+            "_id": "50acfba938345b0978fccad7"
         }
     }
 
@@ -397,14 +385,12 @@ item, so we got a ``402 PRECONDITION FAILED``. Again!
     (...)
 
     {
-        "response": {
-            "data": {
-                "status": "OK",
-                "updated": "Fri, 23 Nov 2012 08:11:19 UTC",
-                "_id": "50adfa4038345b1049c88a37",
-                "link": "<link rel='self' title='person' href='eve-demo.herokuapp.com/people/50adfa4038345b1049c88a37/' />",
-                "etag": "372fbbebf54dfe61742556f17a8461ca9a6f5a11"
-            }
+        "data": {
+            "status": "OK",
+            "updated": "Fri, 23 Nov 2012 08:11:19 UTC",
+            "_id": "50adfa4038345b1049c88a37",
+            "link": "<link rel='self' title='person' href='eve-demo.herokuapp.com/people/50adfa4038345b1049c88a37/' />",
+            "etag": "372fbbebf54dfe61742556f17a8461ca9a6f5a11"
         }
     }
 
