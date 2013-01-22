@@ -1,11 +1,16 @@
 Eve-Demo
 ========
 
-A fully featured RESTful Web API built, deployed and powered by Eve_. 
+A fully featured RESTful Web API built deployed and powered by Eve_. 
 
 With Eve, setting up an API is very simple. You just need a launch script
 (run.py_) and a configuration module (settings.py_).
-                                                       
+
+.. note:: The demo is currently running v0.0.3 of the Eve framework. While
+          Eve itself is under continous development, this demo is only updated
+          when official updates of the main project are released. Please refer
+          to the official Eve repository for an up-to-date list of features. 
+
 Try it live 
 ----------- 
 An instance of this code is running live at http://eve-demo.herokuapp.com. You
@@ -26,30 +31,30 @@ resources.
 
     $ curl -i http://eve-demo.herokuapp.com/
 
-    HTTP/1.1 200 OK
-    Cache-Control: max-age=20
+    HTTP/1.0 200 OK
     Content-Type: application/json
-    Date: Thu, 22 Nov 2012 10:33:52 GMT
-    Expires: Thu, 22 Nov 2012 10:34:12 GMT
-    Server: Werkzeug/0.8.3 Python/2.7.2
-    Content-Length: 272
-    Connection: keep-alive    
+    Content-Length: 131
+    Cache-Control: max-age=20
+    Expires: Tue, 22 Jan 2013 09:34:34 GMT
+    Server: Eve/0.0.3 Werkzeug/0.8.3 Python/2.7.3
+    Date: Tue, 22 Jan 2013 09:34:14 GMT
+
+    {
+        "_links": {
+            "child": [
+                {"href": "eve-demo.herokuapp.com/works/", "title": "works"}, 
+                {"href": "eve-demo.herokuapp.com/people/", "title": "people"}
+            ]
+        }
+    }   
     
-    
-    { 
-        "links": [ 
-            "<link rel='child' title='works' href='eve-demo.herokuapp.com/works/' />",
-            "<link rel='child' title='people' href='eve-demo.herokuapp.com/people/' />" 
-        ] 
-    }
-    
-    
-Each link provides two tags: ``rel``, explaining the relation between the
-linked resource and current endpoint, and ``title``, containing the linked
-resource name. Togheter these two informations allow the client to eventually
-update its UI and/or transverse the API without any prior knoweledge of its
-structure. HATEOAS is at work here: a ``links`` section is included with
-every response provided by any Eve-powered API.
+Every API endpoint exposes a ``_links`` dictionary containing one or more links
+to related resources. Dictionary keys express the relation (``rel``) between
+the resource and the endpoint. Values can be lists of links (such as in this
+case), or a individual links. Links are dictionaries themselves where ``title``
+contains the name and ``href`` the actual link to the resource. Links allow the
+client to eventually update its UI and/or transverse the API without any prior
+knoweledge of its structure: HATEOAS is at work here.
 
 Cache Control
 :::::::::::::
@@ -70,86 +75,76 @@ API responded with the default ``Content-Type``: JSON.
     Content-Type: application/xml; charset=utf-8
     ...
 
-    <response>
-        <links>
-            <link><link rel='child' title='works' href='eve-demo.herokuapp.com/works/' /></link>
-            <link><link rel='child' title='people' href='eve-demo.herokuapp.com/people/' /></link>
-        </links>
-    </response>
+    <resource>
+        <link rel="child" href="localhost:5000/works/" title="works" />
+        <link rel="child" href="localhost:5000/people/" title="people" />
+    </resource>
 
 We requested XML this time. API responses will be rendered in JSON or XML
 depending on the requested mime-type. 
 
 Resource Endpoints
 ------------------
-We can of course send requests to resource endpoints. With the previous request
-we learned that there is a ``people`` resource available:
+Clients can of course send requests to resource endpoints. With the previous
+request we learned that a ``people`` resource is available. Let's get it:
 
 ::
 
     $ curl -i http://eve-demo.herokuapp.com/people/
 
-    HTTP/1.0 200 OK
-    Last-Modified: Thu, 22 Nov 2012 10:11:12 UTC
-    (...)
+    Content-Type: application/json
+    Content-Length: 2392
+    Cache-Control: max-age=20
+    Expires: Tue, 22 Jan 2013 10:04:43 GMT
+    Last-Modified: Wed, 05 Dec 2012 09:53:07 UTC
+    Server: Eve/0.0.3 Werkzeug/0.8.3 Python/2.7.3
+    Date: Tue, 22 Jan 2013 10:04:23 GMT
 
+    
     {
-        "links": [
-            "<link rel='parent' title='home' href='eve-demo.herokuapp.com' />",
-            "<link rel='collection' title='people' href='eve-demo.herokuapp.com/people/' />"
+        "_items": [
+            {
+                "firstname": "Mark", 
+                "lastname": "Green", 
+                "born": "Sat, 23 Feb 1985 12:00:00 UTC", 
+                "role": ["copy", "author"], 
+                "location": {"city": "New York", "address": "4925 Lacross Road"}, 
+                "_id": "50bf198338345b1c604faf31",
+                "updated": "Wed, 05 Dec 2012 09:53:07 UTC", 
+                "created": "Wed, 05 Dec 2012 09:53:07 UTC", 
+                "etag": "ec5e8200b8fa0596afe9ca71a87f23e71ca30e2d", 
+                "_links": {
+                    "self": {"href": "localhost:5000/people/50bf198338345b1c604faf31/", "title": "person"},
+                },
+            },
+            {
+                "updated": "Wed, 05 Dec 2012 09:53:07 UTC",
+                "firstname": "Anne", 
+                ...
+            } ,
+            ...
         ],
-        "items": [
-            {
-                "updated": "Thu, 22 Nov 2012 10:11:12 UTC",
-                "firstname": "Mark",
-                "created": "Thu, 22 Nov 2012 10:11:12 UTC",
-                "lastname": "Green",
-                "born": "Sat, 23 Feb 1985 12:00:00 UTC",
-                "etag": "77b0a15eaa65027685fe21482937ac2e185c695f",
-                "role": [
-                    "copy",
-                    "author"
-                ],
-                "location": {
-                    "city": "New York",
-                    "address": "4925 Lacross Road"
-                },
-                "link": "<link rel='self' title='person' href='eve-demo.herokuapp.com/people/50adfa4038345b1049c88a37/' />",
-                "_id": "50adfa4038345b1049c88a37"
-            },
-            {
-                "updated": "Thu, 22 Nov 2012 10:11:12 UTC",
-                "firstname": "Anne",
-                "created": "Thu, 22 Nov 2012 10:11:12 UTC",
-                "lastname": "White",
-                "born": "Fri, 25 Sep 1970 10:00:00 UTC",
-                "etag": "990ea0b937347269d43f748179be67062f1417d5",
-                "role": [
-                    "contributor",
-                    "copy"
-                ],
-                "location": {
-                    "city": "Ashfield",
-                    "address": "32 Joseph Street"
-                },
-                "link": "<link rel='self' title='person' href='eve-demo.herokuapp.com/people/50adfa4038345b1049c88a38/' />",
-                "_id": "50adfa4038345b1049c88a38"
-            },
-            ( ... )
-            ]
+        "_links": {
+            "self": {"href": "localhost:5000/people/", "title": "people"}, 
+            "parent": {"href": "localhost:5000", "title": "home"}
+        }
     }
 
-Each resource item is provided with some important additional fields, all
-automatically handled by the API: 
+
+The ``_items`` list contains the requested data. Along with its own fields,
+each item provides some important, additional fields:
 
 =========== =================================================================
 Field       Description
 =========== =================================================================
-``created`` document creation date
-``updated`` document last update
-``etag``    ETag to be used for concurrency control and conditional requests. 
-``_id``     unique document key, needed to access the indivdual item endpoint
+``created`` item creation date.
+``updated`` item last updated on.
+``etag``    ETag, to be used for concurrency control and conditional requests. 
+``_id``     unique item key, also needed to access the indivdual item endpoint.
 =========== =================================================================
+
+These additional fields are automatically handled by the API (clients don't
+need to provide them when adding/editing resources).
 
 Conditional requests
 ::::::::::::::::::::
@@ -158,20 +153,17 @@ later to retrieve only the items that have changed since:
 
 ::
 
-    $ curl -H "If-Modified-Since: Thu, 22 Nov 2012 10:11:12 UTC" -i http://eve-demo.herokuapp.com:5000/people/
+    $ curl -H "If-Modified-Since: Wed, 05 Dec 2012 09:53:07 UTC" -i http://eve-demo.herokuapp.com:5000/people/
 
     HTTP/1.0 200 OK
-    ( ... )
+    ...
 
     {
-        "items": [],
-        "links": [
-            "<link rel='child' title='works' href='eve-demo.herokuapp.com/works/' />",
-            "<link rel='child' title='people' href='eve-demo.herokuapp.com/people/' />"
-        ]
+        "_items": [],
+        "_links": [..]
     }
 
-This time we didn't get any item back, as none has changed since the previous
+This time we didn't get any item back as none has changed since the previous
 request. 
 
 Filtering and sorting
@@ -229,13 +221,13 @@ inserted with a single request.
             "status": "OK",
             "updated": "Thu, 22 Nov 2012 15:22:27 UTC",
             "_id": "50ae43339fa12500024def5b",
-            "link": "<link rel='self' title='person' href='eve-demo.herokuapp.com/people/50ae43339fa12500024def5b/' />"
+            "_links": {"self": {"href": "eve-demo.herokuapp.com/people/50ae43339fa12500024def5b/", "title": "person"}}
         },
         "item1": {
             "status": "OK",
             "updated": "Thu, 22 Nov 2012 15:22:27 UTC",
             "_id": "50ae43339fa12500024def5c",
-            "link": "<link rel='self' title='person' href='eve-demo.herokuapp.com/people/50ae43339fa12500024def5c/' />"
+            "_links": {"self": {"href": "eve-demo.herokuapp.com/people/50ae43339fa12500024def5c/", "title": "person"}}
         }
     }
 
@@ -267,7 +259,7 @@ items.
             "status": "OK",
             "updated": "Thu, 22 Nov 2012 15:29:08 UTC",
             "_id": "50ae44c49fa12500024def5d",
-            "link": "<link rel='self' title='person' href='eve-demo.herokuapp.com/people/50ae44c49fa12500024def5d/' />"
+            "_links": {"self": {"href": "eve-demo.herokuapp.com/people/50ae44c49fa12500024def5d/", "title": "person"}}
         }
     }
 
@@ -309,28 +301,21 @@ with a secondary field value (in our case, ``lastname``):
     HTTP/1.0 200 OK
     Etag: 28995829ee85d69c4c18d597a0f68ae606a266cc
     Last-Modified: Wed, 21 Nov 2012 16:04:56 UTC 
-    ( ... )
+    ... 
 
     {
-        "links": [
-            "<link rel='parent' title='home' href='eve-demo.herokuapp.com' />",
-            "<link rel='collection' title='people' href='eve-demo.herokuapp.com/people/' />"
-        ],
-        "item": {
-            "updated": "Wed, 21 Nov 2012 16:04:56 UTC",
-            "firstname": "John",
-            "created": "Wed, 21 Nov 2012 16:04:56 UTC",
-            "lastname": "Doe",
-            "born": "Thu, 27 Aug 1970 14:37:13 UTC",
-            "role": [
-                "author"
-            ],
-            "location": {
-                "city": "Auburn",
-                "address": "422 South Gay Street"
-            },
-            "link": "<link rel='self' title='person' href='eve-demo.herokuapp.com/people/50acfba938345b0978fccad7/' />",
-            "_id": "50acfba938345b0978fccad7"
+        "firstname": "John",
+        "lastname": "Doe",
+        "born": "Thu, 27 Aug 1970 14:37:13 UTC",
+        "role": ["author"],
+        "location": {"city": "Auburn", "address": "422 South Gay Street"},
+        "_id": "50acfba938345b0978fccad7"
+        "updated": "Wed, 21 Nov 2012 16:04:56 UTC",
+        "created": "Wed, 21 Nov 2012 16:04:56 UTC",
+        "_links": {
+            "self": {"href": "eve-demo.herokuapp.com/people/50acfba938345b0978fccad7/", "title": "person"},
+            "parent": {"href": "eve-demo.herokuapp.com/", "title": "home"},
+            "collection": {"href": "http://eve-demo.herokuapp.com/people/", "title": "people"}
         }
     }
 
@@ -382,21 +367,21 @@ item, so we got a ``402 PRECONDITION FAILED``. Again!
     HTTP/1.0 200 OK
     ETag: 372fbbebf54dfe61742556f17a8461ca9a6f5a11
     Last-Modified: Fri, 23 Nov 2012 08:11:19 UTC
-    (...)
+    ...
 
     {
         "data": {
             "status": "OK",
             "updated": "Fri, 23 Nov 2012 08:11:19 UTC",
             "_id": "50adfa4038345b1049c88a37",
-            "link": "<link rel='self' title='person' href='eve-demo.herokuapp.com/people/50adfa4038345b1049c88a37/' />",
             "etag": "372fbbebf54dfe61742556f17a8461ca9a6f5a11"
+            "_links": {"self": "..."}
         }
     }
 
-Right on! This time we got our patch in, and the server returned the new ETag.
-We also get the new ``updated`` value, which eventually will allow us to
-perform ``If-Modified-Since`` requests.
+This time we got our patch in, and the server returned the new ETag.  We also
+get the new ``updated`` value, which eventually will allow us to perform
+subsequent ``If-Modified-Since`` requests.
 
 Local install
 -------------
