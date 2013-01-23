@@ -1,31 +1,29 @@
 Eve-Demo
 ========
 
-A fully featured RESTful Web API built deployed and powered by Eve_. 
+A fully featured RESTful Web API powered by Eve_. With Eve setting up an API is
+very simple. You just need a launch script (run.py_) and a configuration module
+(settings.py_).
 
-With Eve, setting up an API is very simple. You just need a launch script
-(run.py_) and a configuration module (settings.py_).
-
-.. note:: The demo is currently running v0.0.3 of the Eve framework. While
-          Eve itself is under continous development, this demo is only updated
-          when official updates of the main project are released. Please refer
-          to the official Eve repository for an up-to-date list of features. 
+*Note*. The demo is currently running v0.0.3 of the Eve framework. Eve-Demo is
+only updated when major Eve updates are released. Please refer to the official
+Eve repository for an up-to-date features list. 
 
 Try it live 
 ----------- 
 An instance of this code is running live at http://eve-demo.herokuapp.com. You
-can consume the API by using cURL (see the examples below) or, if you are on
-Chrome, you might want to give a shot at the Advanced REST Client extension.
+can consume the API by using cURL or, if you are on Chrome, you might want to
+give a shot at the Advanced REST Client extension.
 
 There is also a sample client application available. It uses the Requests
-library to consume the demo API. In fact, it has been quickly hacked togheter
-to reset the API every once in a while. Check it out at
+library to consume the demo. In fact it has been quickly hacked togheter to
+reset the API every once in a while. Check it out at
 https://github.com/nicolaiarocci/eve-demo-client.
  
 API Entry Point 
 --------------- 
-A ``GET`` request sent to the API entry point will provide a list of available
-resources.
+A ``GET`` request sent to the API entry point (the `home page`) will obtain
+a list of available resources:
 
 ::
 
@@ -51,10 +49,10 @@ resources.
 Every API endpoint exposes a ``_links`` dictionary containing one or more links
 to related resources. Dictionary keys express the relation (``rel``) between
 the resource and the endpoint. Values can be lists of links (such as in this
-case), or a individual links. Links are dictionaries themselves where ``title``
-contains the name and ``href`` the actual link to the resource. Links allow the
-client to eventually update its UI and/or transverse the API without any prior
-knoweledge of its structure: HATEOAS is at work here.
+case) or a single link. Links are dictionaries themselves where ``title``
+is the `human readable` resource name and ``href`` the actual link to the
+resource. Links allow the client to eventually update its UI and/or transverse
+the API without any prior knoweledge of its structure: HATEOAS_ is at work here.
 
 Cache Control
 :::::::::::::
@@ -118,8 +116,8 @@ request we learned that a ``people`` resource is available. Let's get it:
                 },
             },
             {
-                "updated": "Wed, 05 Dec 2012 09:53:07 UTC",
                 "firstname": "Anne", 
+                "updated": "Wed, 05 Dec 2012 09:53:07 UTC",
                 ...
             } ,
             ...
@@ -421,3 +419,4 @@ APIs with Python, Flask and MongoDB
 .. _Cerberus: https://github.com/nicolaiarocci/cerberus
 .. _run.py: https://github.com/nicolaiarocci/eve-demo/blob/master/run.py
 .. _settings.py: https://github.com/nicolaiarocci/eve-demo/blob/master/settings.py
+.. _HATEOAS: http://en.wikipedia.org/wiki/HATEOAS
