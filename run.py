@@ -8,9 +8,8 @@
 
     The live demo is available at eve-demo.herokuapp.com. Please keep in mind
     that the it is running on Heroku's free tier using a free MongoHQ
-    sandbox, which menas that the first request to the service will probably
-    take some time, and the overall performance will probably be poor. Also,
-    the database gets a reset every now and then.
+    sandbox, which means that the first request to the service will probably
+    be slow. The database gets a reset every now and then.
 
     :copyright: (c) 2012 by Nicola Iarocci.
     :license: BSD, see LICENSE for more details.
