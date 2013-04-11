@@ -129,6 +129,9 @@ works = {
         'owner': {
             'type': 'objectid',
             'required': True,
+            'data_relation': {
+                'collection': 'people'
+            }
         },
     }
 }
