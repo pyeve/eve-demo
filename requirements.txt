@@ -1,5 +1,5 @@
-Cerberus==0.0.3
-Eve==0.0.4
+Cerberus==0.1.0
+Eve==0.0.5
 Flask==0.9
 Flask-PyMongo==0.2.1
 Jinja2==2.6
