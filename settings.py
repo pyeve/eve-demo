@@ -129,6 +129,10 @@ works = {
         'owner': {
             'type': 'objectid',
             'required': True,
+            # referential integrity constraint: value must exist in the
+            # 'people' collection. Since we aren't declaring a 'field' key,
+            # will default to `people._id` (or, more precisely, to whatever
+            # ID_FIELD value is).
             'data_relation': {
                 'collection': 'people'
             }
