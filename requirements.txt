@@ -1,9 +1,1 @@
-Cerberus==0.1.0
-Eve==0.0.5
-Flask==0.9
-Flask-PyMongo==0.2.1
-Jinja2==2.6
-Werkzeug==0.8.3
-pymongo==2.4.2
-simplejson==3.1.0
-wsgiref==0.1.2
+-e git+https://github.com/nicolaiarocci/eve.git#egg=eve-dev
