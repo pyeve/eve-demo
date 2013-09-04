@@ -1,1 +1,1 @@
--e git+https://github.com/nicolaiarocci/eve.git#egg=eve-dev
+-e git+https://github.com/nicolaiarocci/eve.git@develop#egg=eve-dev
