@@ -25,7 +25,7 @@ API Entry Point
 A ``GET`` request sent to the API entry point (the `home page`) will obtain
 a list of available resources:
 
-::
+.. code-block:: console
 
     $ curl -i http://eve-demo.herokuapp.com
 
@@ -65,7 +65,7 @@ JSON and XML rendering
 Since we did not provide an ``Accept`` header with our request, the
 API responded with the default ``Content-Type``: JSON. 
 
-::
+.. code-block:: console
 
     $ curl -H "Accept: application/xml" -i http://eve-demo.herokuapp.com
 
@@ -86,7 +86,7 @@ Resource Endpoints
 Clients can of course send requests to resource endpoints. With the previous
 request we learned that a ``people`` resource is available. Let's get it:
 
-::
+.. code-block:: console
 
     $ curl -i http://eve-demo.herokuapp.com/people
 
@@ -149,7 +149,7 @@ Conditional requests
 In the above response, a ``Last-Modified`` header is included. It can be used
 later to retrieve only the items that have changed since:
 
-::
+.. code-block:: console
 
     $ curl -H "If-Modified-Since: Wed, 05 Dec 2012 09:53:07 UTC" -i http://eve-demo.herokuapp.com:5000/people/
 
@@ -170,19 +170,19 @@ Eve-powered APIs support several kinds of conditional requests. Besides the
 ``If-Modified-Since`` header, you can also submit queries. There are two
 supported query syntaxes, the MongoDB query syntax:
 
-::
+.. code-block:: console
 
     $ curl -i http://eve-demo.herokuapp.com/people?where={"lastname": "Doe"}
 
 and the native Python syntax:
 
-::
+.. code-block:: console
 
     $ curl -i http://eve-demo.herokuapp.com/people?where=lastname=="Doe"
 
 Sorting is supported as well:
 
-::
+.. code-block:: console
 
     $ curl -i http://eve-demo.herokuapp.com/people?sort=[("lastname", -1)]
 
@@ -195,13 +195,13 @@ Pagination
 In order to save bandwith and resources, pagination is enabled by default. You
 have control on the default page size and the maximum number of items per page.
 
-::
+.. code-block:: console
 
     $ curl -i http://eve-demo.herokuapp.com/people?max_results=20&page=2
 
 Of course you can mix all the available query parameters:
 
-::
+.. code-block:: console
 
     $ curl -i http://eve-demo.herokuapp.com/people/?where={"lastaname": "Doe"}&sort=[("firstname",1)]&page=5
 
@@ -210,7 +210,7 @@ Multiple inserts
 Insertion is done at the resource endpoint via POST. Multiple items can be
 inserted with a single request. 
 
-::
+.. code-block:: console
 
     curl -d 'item1={"firstname": "barack", "lastname": "obama"}' -d 'item2={"firstname": "mitt", "lastname": "romney"}' http://eve-demo.herokuapp.com/people
 
@@ -243,7 +243,7 @@ set by the API maintainer. The whole the request is always processed, which
 means that eventual validation errors won't prevent insertion of valid
 items.
 
-::
+.. code-block:: console
 
     curl -d 'item1={"firstname": "bill", "lastname": "clinton"}' -d 'item2={"firstname": "mitt", "lastname": "romney"}' http://eve-demo.herokuapp.com/people
     {
@@ -271,7 +271,7 @@ Resource Deletion
 If enabled by the maintainer, an Eve-powered API will also allow deletion of
 the whole content of a resource.
 
-::
+.. code-block:: console
 
     $ curl -X DELETE http://eve-demo.herokuapp.com/people
 
@@ -283,14 +283,14 @@ Item Endpoints
 Item endpoints are accessed by combining parent resource URI and item unique
 key.
 
-::
+.. code-block:: console
 
     $ curl -i http://eve-demo.herokuapp.com/people/50acfba938345b0978fccad7
 
 If enabled by the API mantainer, it is also possibile to access the same item
 with a secondary field value (in our case, ``lastname``):
 
-::
+.. code-block:: console
 
     $ curl -i http://eve-demo.herokuapp.com/people/Doe
 
@@ -328,7 +328,7 @@ if the request includes an ``ETag`` that matches the current representation
 stored on the server. This prevents overwriting the items with obsolete
 versions.
 
-::
+.. code-block:: console
 
     $ curl -X PATCH -i http://eve-demo.herokuapp.com/people/50adfa4038345b1049c88a37 -d 'data={"firstname": "ronald"}'
 
@@ -342,7 +342,7 @@ versions.
 We did not provide an ETag for the item so we got a not-so-nice ``403
 FORBIDDEN``. Let's try again:
 
-::
+.. code-block:: console
 
     $ curl -H "If-Match: 1234567890123456789012345678901234567890" -X PATCH -i http://eve-demo.herokuapp.com/people/50adfa4038345b1049c88a37 -d 'data={"firstname": "ronald"}'
 
@@ -356,7 +356,7 @@ What went wrong this time? We did provide the mandatory ``If-Match`` header,
 but it did not match the ETag computed on the representation of the current
 item, so we got a ``402 PRECONDITION FAILED``. Again!
 
-::
+.. code-block:: console
 
     $ curl -H "If-Match: 80b81f314712932a4d4ea75ab0b76a4eea613012" -X PATCH -i http://eve-demo.herokuapp.com/people/50adfa4038345b1049c88a37 -d 'data={"firstname": "ronald"}'
 
@@ -382,12 +382,12 @@ Local install
 If you want to play with this app locally create a virtualenv environment and
 once activated install Eve:
 
-::
+.. code-block:: console
 
     $ pip install eve
 Then, just clone this repository:
 
-::
+.. code-block:: console
 
     git clone https://github.com/nicolaiarocci/eve-demo.git
     
@@ -395,7 +395,7 @@ Of course you need a local instance of MongoDB running, and don't forget to
 ajust the settings.py_ module accordingly.  Launching the API is
 straightforward:
 
-::
+.. code-block:: console
 
     python run.py
 
