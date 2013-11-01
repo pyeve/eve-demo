@@ -11,7 +11,7 @@
     sandbox, which means that the first request to the service will probably
     be slow. The database gets a reset every now and then.
 
-    :copyright: (c) 2012 by Nicola Iarocci.
+    :copyright: (c) 2013 by Nicola Iarocci.
     :license: BSD, see LICENSE for more details.
 """
 
