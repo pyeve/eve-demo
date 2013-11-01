@@ -29,6 +29,10 @@ a list of available resources:
 
     $ curl -i http://eve-demo.herokuapp.com
 
+Response:
+
+.. code-block:: python
+
     HTTP/1.0 200 OK
     Content-Type: application/json
     Content-Length: 131
@@ -69,6 +73,10 @@ API responded with the default ``Content-Type``: JSON.
 
     $ curl -H "Accept: application/xml" -i http://eve-demo.herokuapp.com
 
+Response:
+
+.. code-block:: python
+
     HTTP/1.0 200 OK
     Content-Type: application/xml; charset=utf-8
     ...
@@ -89,6 +97,10 @@ request we learned that a ``people`` resource is available. Let's get it:
 .. code-block:: console
 
     $ curl -i http://eve-demo.herokuapp.com/people
+
+Response:
+
+.. code-block:: python
 
     Content-Type: application/json
     Content-Length: 2392
@@ -153,6 +165,10 @@ later to retrieve only the items that have changed since:
 
     $ curl -H "If-Modified-Since: Wed, 05 Dec 2012 09:53:07 UTC" -i http://eve-demo.herokuapp.com:5000/people/
 
+Response:
+
+.. code-block:: python
+
     HTTP/1.0 200 OK
     ...
 
@@ -212,7 +228,11 @@ inserted with a single request.
 
 .. code-block:: console
 
-    curl -d 'item1={"firstname": "barack", "lastname": "obama"}' -d 'item2={"firstname": "mitt", "lastname": "romney"}' http://eve-demo.herokuapp.com/people
+    $ curl -d 'item1={"firstname": "barack", "lastname": "obama"}' -d 'item2={"firstname": "mitt", "lastname": "romney"}' http://eve-demo.herokuapp.com/people
+
+Response:
+
+.. code-block:: python
 
     {
         [            
@@ -245,7 +265,12 @@ items.
 
 .. code-block:: console
 
-    curl -d 'item1={"firstname": "bill", "lastname": "clinton"}' -d 'item2={"firstname": "mitt", "lastname": "romney"}' http://eve-demo.herokuapp.com/people
+    $ curl -d 'item1={"firstname": "bill", "lastname": "clinton"}' -d 'item2={"firstname": "mitt", "lastname": "romney"}' http://eve-demo.herokuapp.com/people
+
+Response:
+
+.. code-block:: python
+
     {
         [            
             "status": "ERR",
@@ -293,6 +318,10 @@ with a secondary field value (in our case, ``lastname``):
 .. code-block:: console
 
     $ curl -i http://eve-demo.herokuapp.com/people/Doe
+
+Response:
+
+.. code-block:: python
 
     HTTP/1.0 200 OK
     Etag: 28995829ee85d69c4c18d597a0f68ae606a266cc
@@ -360,6 +389,10 @@ item, so we got a ``402 PRECONDITION FAILED``. Again!
 
     $ curl -H "If-Match: 80b81f314712932a4d4ea75ab0b76a4eea613012" -X PATCH -i http://eve-demo.herokuapp.com/people/50adfa4038345b1049c88a37 -d 'data={"firstname": "ronald"}'
 
+Response:
+
+.. code-block:: python
+
     HTTP/1.0 200 OK
     ETag: 372fbbebf54dfe61742556f17a8461ca9a6f5a11
     Last-Modified: Fri, 23 Nov 2012 08:11:19 UTC
@@ -389,7 +422,7 @@ Then, just clone this repository:
 
 .. code-block:: console
 
-    git clone https://github.com/nicolaiarocci/eve-demo.git
+    $ git clone https://github.com/nicolaiarocci/eve-demo.git
     
 Of course you need a local instance of MongoDB running, and don't forget to
 ajust the settings.py_ module accordingly.  Launching the API is
@@ -397,7 +430,7 @@ straightforward:
 
 .. code-block:: console
 
-    python run.py
+    $ python run.py
 
 Have fun!
 
