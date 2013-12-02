@@ -1,1 +1,1 @@
--e git+https://github.com/nicolaiarocci/eve.git@develop#egg=eve-dev
+Eve==0.2
