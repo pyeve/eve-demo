@@ -39,8 +39,8 @@ else:
     MONGO_PASSWORD = 'user'
     MONGO_DBNAME = 'apitest'
 
-    # let's not forget the API entry point
-    SERVER_NAME = '127.0.0.1:5000'
+    # let's not forget the API entry point (not really needed anyway)
+    #SERVER_NAME = '127.0.0.1:5000'
 
 
 # Enable reads (GET), inserts (POST) and DELETE for resources/collections
