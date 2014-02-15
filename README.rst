@@ -6,8 +6,7 @@ very simple. You just need a launch script (run.py_) and a configuration module
 (settings.py_).
 
 *Note*. The demo is currently running v0.0.3 of the Eve framework. Eve-Demo is
-only updated when major Eve updates are released. Please refer to the official
-Eve repository for an up-to-date features list. 
+only updated when major Eve updates are released. Please refer to the official Eve repository for an up-to-date features list. 
 
 Try it live 
 ----------- 
@@ -33,22 +32,22 @@ Response:
 
 .. code-block:: python
 
-    HTTP/1.0 200 OK
+    TTP/1.0 200 OK
     Content-Type: application/json
-    Content-Length: 131
+    Content-Length: 101
     Cache-Control: max-age=20
-    Expires: Tue, 22 Jan 2013 09:34:34 GMT
-    Server: Eve/0.0.3 Werkzeug/0.8.3 Python/2.7.3
-    Date: Tue, 22 Jan 2013 09:34:14 GMT
+    Expires: Sat, 15 Feb 2014 15:52:57 GMT
+    Server: Eve/0.3 Werkzeug/0.9.4 Python/2.7.3
+    Date: Sat, 15 Feb 2014 15:52:37 GMT
 
     {
         "_links": {
             "child": [
-                {"href": "eve-demo.herokuapp.com/works", "title": "works"}, 
-                {"href": "eve-demo.herokuapp.com/people", "title": "people"}
+                {"href": "/works", "title": "works"}, 
+                {"href": "/people", "title": "people"}
             ]
         }
-    }   
+    }
     
 Every API endpoint exposes a ``_links`` dictionary containing one or more links
 to related resources. Dictionary keys express the relation (``rel``) between
@@ -120,23 +119,23 @@ Response:
                 "role": ["copy", "author"], 
                 "location": {"city": "New York", "address": "4925 Lacross Road"}, 
                 "_id": "50bf198338345b1c604faf31",
-                "updated": "Wed, 05 Dec 2012 09:53:07 UTC", 
-                "created": "Wed, 05 Dec 2012 09:53:07 UTC", 
-                "etag": "ec5e8200b8fa0596afe9ca71a87f23e71ca30e2d", 
+                "_updated": "Wed, 05 Dec 2012 09:53:07 UTC", 
+                "_created": "Wed, 05 Dec 2012 09:53:07 UTC", 
+                "_etag": "ec5e8200b8fa0596afe9ca71a87f23e71ca30e2d", 
                 "_links": {
                     "self": {"href": "localhost:5000/people/50bf198338345b1c604faf31", "title": "person"},
                 },
             },
             {
                 "firstname": "Anne", 
-                "updated": "Wed, 05 Dec 2012 09:53:07 UTC",
+                "_updated": "Wed, 05 Dec 2012 09:53:07 UTC",
                 ...
             } ,
             ...
         ],
         "_links": {
-            "self": {"href": "localhost:5000/people", "title": "people"}, 
-            "parent": {"href": "localhost:5000", "title": "home"}
+            "self": {"href": "/people", "title": "people"}, 
+            "parent": {"href": "", "title": "home"}
         }
     }
 
@@ -144,14 +143,14 @@ Response:
 The ``_items`` list contains the requested data. Along with its own fields,
 each item provides some important, additional fields:
 
-=========== =================================================================
-Field       Description
-=========== =================================================================
-``created`` item creation date.
-``updated`` item last updated on.
-``etag``    ETag, to be used for concurrency control and conditional requests. 
-``_id``     unique item key, also needed to access the indivdual item endpoint.
-=========== =================================================================
+============ =================================================================
+Field        Description
+============ =================================================================
+``_created`` item creation date.
+``_updated`` item last updated on.
+``_etag``    ETag, to be used for concurrency control and conditional requests. 
+``_id``      unique item key, also needed to access the indivdual item endpoint.
+============ =================================================================
 
 These additional fields are automatically handled by the API (clients don't
 need to provide them when adding/editing resources).
@@ -228,7 +227,7 @@ inserted with a single request.
 
 .. code-block:: console
 
-    $ curl -d 'item1={"firstname": "barack", "lastname": "obama"}' -d 'item2={"firstname": "mitt", "lastname": "romney"}' http://eve-demo.herokuapp.com/people
+    $ curl -d '[{"firstname": "barack", "lastname": "obama"}, {"firstname": "mitt", "lastname": "romney"}]' -H 'Content-Type: application/json' http://eve-demo.herokuapp.com/people
 
 Response:
 
@@ -236,16 +235,16 @@ Response:
 
     {
         [            
-            "status": "OK",
-            "updated": "Thu, 22 Nov 2012 15:22:27 UTC",
+            "_status": "OK",
+            "_updated": "Thu, 22 Nov 2012 15:22:27 UTC",
             "_id": "50ae43339fa12500024def5b",
-            "_links": {"self": {"href": "eve-demo.herokuapp.com/people/50ae43339fa12500024def5b", "title": "person"}}
+            "_links": {"self": {"href": "/people/50ae43339fa12500024def5b", "title": "person"}}
         ],
         [
-            "status": "OK",
-            "updated": "Thu, 22 Nov 2012 15:22:27 UTC",
+            "_status": "OK",
+            "_updated": "Thu, 22 Nov 2012 15:22:27 UTC",
             "_id": "50ae43339fa12500024def5c",
-            "_links": {"self": {"href": "eve-demo.herokuapp.com/people/50ae43339fa12500024def5c", "title": "person"}}
+            "_links": {"self": {"href": "/people/50ae43339fa12500024def5c", "title": "person"}}
         ]
     }
 
@@ -265,24 +264,24 @@ items.
 
 .. code-block:: console
 
-    $ curl -d 'item1={"firstname": "bill", "lastname": "clinton"}' -d 'item2={"firstname": "mitt", "lastname": "romney"}' http://eve-demo.herokuapp.com/people
+    $ curl -d '[{"firstname": "bill", "lastname": "clinton"}, {"firstname": "mitt", "lastname": "romney"}]' -H 'Content-Type: application/json' http://eve-demo.herokuapp.com/people
 
 Response:
 
 .. code-block:: python
 
-    {
-        [            
-            "status": "ERR",
-            "issues": ["value 'romney' for field 'lastname' not unique"]
-        ],
-        [
-            "status": "OK",
-            "updated": "Thu, 22 Nov 2012 15:29:08 UTC",
+    [
+        {
+            "_status": "ERR",
+            "_issues": {"lastname": "value 'clinton' not unique"}
+        },
+        {
+            "_status": "OK",
+            "_updated": "Thu, 22 Nov 2012 15:29:08 GMT",
             "_id": "50ae44c49fa12500024def5d",
-            "_links": {"self": {"href": "eve-demo.herokuapp.com/people/50ae44c49fa12500024def5d", "title": "person"}}
-        ]
-    }
+            "_links": {"self": {"href": "/people/50ae44c49fa12500024def5d", "title": "person"}}
+        }
+    ]
 
 In the above example, the first document did not validate and was rejected,
 while the second document was successfully created. API maintainer has complete
@@ -335,12 +334,12 @@ Response:
         "role": ["author"],
         "location": {"city": "Auburn", "address": "422 South Gay Street"},
         "_id": "50acfba938345b0978fccad7"
-        "updated": "Wed, 21 Nov 2012 16:04:56 UTC",
-        "created": "Wed, 21 Nov 2012 16:04:56 UTC",
+        "_updated": "Wed, 21 Nov 2012 16:04:56 UTC",
+        "_created": "Wed, 21 Nov 2012 16:04:56 UTC",
         "_links": {
-            "self": {"href": "eve-demo.herokuapp.com/people/50acfba938345b0978fccad7", "title": "person"},
-            "parent": {"href": "eve-demo.herokuapp.com", "title": "home"},
-            "collection": {"href": "http://eve-demo.herokuapp.com/people", "title": "people"}
+            "self": {"href": "/people/50acfba938345b0978fccad7", "title": "person"},
+            "parent": {"href": "", "title": "home"},
+            "collection": {"href": "//eve-demo.herokuapp.com/people", "title": "people"}
         }
     }
 
@@ -359,7 +358,7 @@ versions.
 
 .. code-block:: console
 
-    $ curl -X PATCH -i http://eve-demo.herokuapp.com/people/50adfa4038345b1049c88a37 -d 'data={"firstname": "ronald"}'
+    $ curl -X PATCH -i http://eve-demo.herokuapp.com/people/521d6840c437dc0002d1203c -d '{"firstname": "ronald"}'
 
     HTTP/1.0 403 FORBIDDEN
 
@@ -373,7 +372,7 @@ FORBIDDEN``. Let's try again:
 
 .. code-block:: console
 
-    $ curl -H "If-Match: 1234567890123456789012345678901234567890" -X PATCH -i http://eve-demo.herokuapp.com/people/50adfa4038345b1049c88a37 -d 'data={"firstname": "ronald"}'
+    $ curl -H "If-Match: 1234567890123456789012345678901234567890" -X PATCH -i http://eve-demo.herokuapp.com/people/521d6840c437dc0002d1203c -d '{"firstname": "ronald"}'
 
     HTTP/1.0 412 PRECONDITION FAILED
 
@@ -387,7 +386,7 @@ item, so we got a ``402 PRECONDITION FAILED``. Again!
 
 .. code-block:: console
 
-    $ curl -H "If-Match: 80b81f314712932a4d4ea75ab0b76a4eea613012" -X PATCH -i http://eve-demo.herokuapp.com/people/50adfa4038345b1049c88a37 -d 'data={"firstname": "ronald"}'
+    $ curl -H "If-Match: 80b81f314712932a4d4ea75ab0b76a4eea613012" -X PATCH -i http://eve-demo.herokuapp.com/people/50adfa4038345b1049c88a37 -d '{"firstname": "ronald"}'
 
 Response:
 
@@ -399,10 +398,10 @@ Response:
     ...
 
     {
-        "status": "OK",
-        "updated": "Fri, 23 Nov 2012 08:11:19 UTC",
+        "_status": "OK",
+        "_updated": "Fri, 23 Nov 2012 08:11:19 GMT",
         "_id": "50adfa4038345b1049c88a37",
-        "etag": "372fbbebf54dfe61742556f17a8461ca9a6f5a11"
+        "_etag": "372fbbebf54dfe61742556f17a8461ca9a6f5a11"
         "_links": {"self": "..."}
     }
 
