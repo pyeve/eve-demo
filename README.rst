@@ -43,8 +43,8 @@ Response:
     {
         "_links": {
             "child": [
-                {"href": "/works", "title": "works"}, 
-                {"href": "/people", "title": "people"}
+                {"href": "eve-demo.herokuapp.com/works", "title": "works"}, 
+                {"href": "eve-demo.herokuapp.com/people", "title": "people"}
             ]
         }
     }
@@ -81,8 +81,8 @@ Response:
     ...
 
     <resource>
-        <link rel="child" href="localhost:5000/works" title="works" />
-        <link rel="child" href="localhost:5000/people" title="people" />
+        <link rel="child" href="eve-demo.herokuapp.com/works" title="works" />
+        <link rel="child" href="eve-demo.herokuapp.com/people" title="people" />
     </resource>
 
 We requested XML this time. API responses will be rendered in JSON or XML
@@ -123,7 +123,7 @@ Response:
                 "_created": "Wed, 05 Dec 2012 09:53:07 UTC", 
                 "_etag": "ec5e8200b8fa0596afe9ca71a87f23e71ca30e2d", 
                 "_links": {
-                    "self": {"href": "localhost:5000/people/50bf198338345b1c604faf31", "title": "person"},
+                    "self": {"href": "eve-demo.herokuapp.com/people/50bf198338345b1c604faf31", "title": "person"},
                 },
             },
             {
@@ -134,8 +134,8 @@ Response:
             ...
         ],
         "_links": {
-            "self": {"href": "/people", "title": "people"}, 
-            "parent": {"href": "", "title": "home"}
+            "self": {"href": "eve-demo.herokuapp.com/people", "title": "people"}, 
+            "parent": {"href": "eve-demo.herokuapp.com", "title": "home"}
         }
     }
 
@@ -238,13 +238,13 @@ Response:
             "_status": "OK",
             "_updated": "Thu, 22 Nov 2012 15:22:27 UTC",
             "_id": "50ae43339fa12500024def5b",
-            "_links": {"self": {"href": "/people/50ae43339fa12500024def5b", "title": "person"}}
+            "_links": {"self": {"href": "eve-demo.herokuapp.com/people/50ae43339fa12500024def5b", "title": "person"}}
         ],
         [
             "_status": "OK",
             "_updated": "Thu, 22 Nov 2012 15:22:27 UTC",
             "_id": "50ae43339fa12500024def5c",
-            "_links": {"self": {"href": "/people/50ae43339fa12500024def5c", "title": "person"}}
+            "_links": {"self": {"href": "eve-demo.herokuapp.com/people/50ae43339fa12500024def5c", "title": "person"}}
         ]
     }
 
@@ -279,7 +279,7 @@ Response:
             "_status": "OK",
             "_updated": "Thu, 22 Nov 2012 15:29:08 GMT",
             "_id": "50ae44c49fa12500024def5d",
-            "_links": {"self": {"href": "/people/50ae44c49fa12500024def5d", "title": "person"}}
+            "_links": {"self": {"href": "eve-demo.herokuapp.com/people/50ae44c49fa12500024def5d", "title": "person"}}
         }
     ]
 
@@ -337,8 +337,8 @@ Response:
         "_updated": "Wed, 21 Nov 2012 16:04:56 UTC",
         "_created": "Wed, 21 Nov 2012 16:04:56 UTC",
         "_links": {
-            "self": {"href": "/people/50acfba938345b0978fccad7", "title": "person"},
-            "parent": {"href": "", "title": "home"},
+            "self": {"href": "eve-demo.herokuapp.com/people/50acfba938345b0978fccad7", "title": "person"},
+            "parent": {"href": "eve-demo.herokuapp.com", "title": "home"},
             "collection": {"href": "//eve-demo.herokuapp.com/people", "title": "people"}
         }
     }
