@@ -15,7 +15,7 @@ can consume the API by using cURL or, if you are on Chrome, you might want to
 give a shot at the Advanced REST Client extension.
 
 There is also a sample client application available. It uses the Requests
-library to consume the demo. In fact it has been quickly hacked togheter to
+library to consume the demo. In fact it has been quickly hacked together to
 reset the API every once in a while. Check it out at
 https://github.com/nicolaiarocci/eve-demo-client.
  
