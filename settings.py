@@ -134,9 +134,9 @@ works = {
             # will default to `people._id` (or, more precisely, to whatever
             # ID_FIELD value is).
             'data_relation': {
+                'embeddable': True,
                 'resource': 'people'
             },
-            'embeddable': True
         },
     }
 }
