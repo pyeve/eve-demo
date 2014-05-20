@@ -135,7 +135,8 @@ works = {
             # ID_FIELD value is).
             'data_relation': {
                 'resource': 'people'
-            }
+            },
+            'embeddable': True
         },
     }
 }
