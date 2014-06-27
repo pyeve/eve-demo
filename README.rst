@@ -5,7 +5,7 @@ A fully featured RESTful Web API powered by Eve_. With Eve setting up an API is
 very simple. You just need a launch script (run.py_) and a configuration module
 (settings.py_).
 
-*Note*. The demo is currently running v0.0.3 of the Eve framework. Eve-Demo is
+*Note*. The demo is currently running v0.0.4 of the Eve framework. Eve-Demo is
 only updated when major Eve updates are released. Please refer to the official Eve repository for an up-to-date features list. 
 
 Try it live 
@@ -32,19 +32,13 @@ Response:
 
 .. code-block:: python
 
-    TTP/1.0 200 OK
-    Content-Type: application/json
-    Content-Length: 101
-    Cache-Control: max-age=20
-    Expires: Sat, 15 Feb 2014 15:52:57 GMT
-    Server: Eve/0.3 Werkzeug/0.9.4 Python/2.7.3
-    Date: Sat, 15 Feb 2014 15:52:37 GMT
+   HTTP/1.0 200 OK
 
     {
         "_links": {
             "child": [
-                {"href": "eve-demo.herokuapp.com/works", "title": "works"}, 
-                {"href": "eve-demo.herokuapp.com/people", "title": "people"}
+                {"href": "/works", "title": "works"}, 
+                {"href": "/people", "title": "people"}
             ]
         }
     }
@@ -101,15 +95,6 @@ Response:
 
 .. code-block:: python
 
-    Content-Type: application/json
-    Content-Length: 2392
-    Cache-Control: max-age=20
-    Expires: Tue, 22 Jan 2013 10:04:43 GMT
-    Last-Modified: Wed, 05 Dec 2012 09:53:07 UTC
-    Server: Eve/0.0.3 Werkzeug/0.8.3 Python/2.7.3
-    Date: Tue, 22 Jan 2013 10:04:23 GMT
-
-    
     {
         "_items": [
             {
@@ -123,7 +108,7 @@ Response:
                 "_created": "Wed, 05 Dec 2012 09:53:07 UTC", 
                 "_etag": "ec5e8200b8fa0596afe9ca71a87f23e71ca30e2d", 
                 "_links": {
-                    "self": {"href": "eve-demo.herokuapp.com/people/50bf198338345b1c604faf31", "title": "person"},
+                    "self": {"href": "/people/50bf198338345b1c604faf31", "title": "person"},
                 },
             },
             {
@@ -134,8 +119,8 @@ Response:
             ...
         ],
         "_links": {
-            "self": {"href": "eve-demo.herokuapp.com/people", "title": "people"}, 
-            "parent": {"href": "eve-demo.herokuapp.com", "title": "home"}
+            "self": {"href": "/people", "title": "people"}, 
+            "parent": {"href": "/", "title": "home"}
         }
     }
 
@@ -238,13 +223,13 @@ Response:
             "_status": "OK",
             "_updated": "Thu, 22 Nov 2012 15:22:27 UTC",
             "_id": "50ae43339fa12500024def5b",
-            "_links": {"self": {"href": "eve-demo.herokuapp.com/people/50ae43339fa12500024def5b", "title": "person"}}
+            "_links": {"self": {"href": "/people/50ae43339fa12500024def5b", "title": "person"}}
         ],
         [
             "_status": "OK",
             "_updated": "Thu, 22 Nov 2012 15:22:27 UTC",
             "_id": "50ae43339fa12500024def5c",
-            "_links": {"self": {"href": "eve-demo.herokuapp.com/people/50ae43339fa12500024def5c", "title": "person"}}
+            "_links": {"self": {"href": "/people/50ae43339fa12500024def5c", "title": "person"}}
         ]
     }
 
@@ -279,7 +264,7 @@ Response:
             "_status": "OK",
             "_updated": "Thu, 22 Nov 2012 15:29:08 GMT",
             "_id": "50ae44c49fa12500024def5d",
-            "_links": {"self": {"href": "eve-demo.herokuapp.com/people/50ae44c49fa12500024def5d", "title": "person"}}
+            "_links": {"self": {"href": "/people/50ae44c49fa12500024def5d", "title": "person"}}
         }
     ]
 
@@ -337,9 +322,9 @@ Response:
         "_updated": "Wed, 21 Nov 2012 16:04:56 UTC",
         "_created": "Wed, 21 Nov 2012 16:04:56 UTC",
         "_links": {
-            "self": {"href": "eve-demo.herokuapp.com/people/50acfba938345b0978fccad7", "title": "person"},
-            "parent": {"href": "eve-demo.herokuapp.com", "title": "home"},
-            "collection": {"href": "//eve-demo.herokuapp.com/people", "title": "people"}
+            "self": {"href": "/people/50acfba938345b0978fccad7", "title": "person"},
+            "parent": {"href": "/", "title": "home"},
+            "collection": {"href": "/people", "title": "people"}
         }
     }
 
