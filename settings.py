@@ -14,7 +14,7 @@
     Keep in mind however that such an auto-managed database will most likely
     perform poorly since it lacks any sort of optimized index.
 
-    :copyright: (c) 2014 by Nicola Iarocci.
+    :copyright: (c) 2015 by Nicola Iarocci.
     :license: BSD, see LICENSE for more details.
 """
 
