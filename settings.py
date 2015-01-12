@@ -20,21 +20,13 @@
 
 import os
 
-# We want to seamlessy run our API both locally and on Heroku so:
-if os.environ.get('PORT'):
-    # We're hosted on Heroku!  Use the MongoHQ sandbox as our backend.
-    MONGO_HOST = 'alex.mongohq.com'
-    MONGO_PORT = 10047
-    MONGO_USERNAME = 'evedemo'
-    MONGO_PASSWORD = 'evedemo'
-    MONGO_DBNAME = 'app9346575'
-else:
-    # Running on local machine. Let's just use the local mongod instance.
-    MONGO_HOST = 'localhost'
-    MONGO_PORT = 27017
-    MONGO_USERNAME = 'user'
-    MONGO_PASSWORD = 'user'
-    MONGO_DBNAME = 'apitest'
+# We want to seamlessy run our API both locally and on Heroku. If running on
+# Heroku, sensible DB connection settings are stored in environment variables.
+MONGO_HOST = os.environ.get('MONGO_HOST', 'localhost')
+MONGO_PORT = os.environ.get('MONGO_PORT', 27017)
+MONGO_USERNAME = os.environ.get('MONGO_USERNAME', 'user')
+MONGO_PASSWORD = os.environ.get('MONGO_PASSWORD', 'user')
+MONGO_DBNAME = os.environ.get('MONGO_DBNAME', 'evedemo')
 
 
 # Enable reads (GET), inserts (POST) and DELETE for resources/collections
