@@ -28,9 +28,6 @@ if os.environ.get('PORT'):
     MONGO_USERNAME = 'evedemo'
     MONGO_PASSWORD = 'evedemo'
     MONGO_DBNAME = 'app9346575'
-
-    # also, correctly set the API entry point
-    SERVER_NAME = 'eve-demo.herokuapp.com'
 else:
     # Running on local machine. Let's just use the local mongod instance.
     MONGO_HOST = 'localhost'
@@ -38,9 +35,6 @@ else:
     MONGO_USERNAME = 'user'
     MONGO_PASSWORD = 'user'
     MONGO_DBNAME = 'apitest'
-
-    # let's not forget the API entry point (not really needed anyway)
-    #SERVER_NAME = '127.0.0.1:5000'
 
 
 # Enable reads (GET), inserts (POST) and DELETE for resources/collections
