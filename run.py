@@ -31,11 +31,5 @@ else:
 app = Eve()
 
 
-@app.after_request
-def after_request(response):
-    response.headers.add('X-Ahmed', 'Je Suis Ahmed.')
-    response.headers.add('X-Charlie', 'Je Suis Charlie.')
-    return response
-
 if __name__ == '__main__':
     app.run(host=host, port=port)
