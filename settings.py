@@ -60,7 +60,7 @@ people = {
     },
 
     # Schema definition, based on Cerberus grammar. Check the Cerberus project
-    # (https://github.com/nicolaiarocci/cerberus) for details.
+    # (https://github.com/pyeve/cerberus) for details.
     'schema': {
         'firstname': {
             'type': 'string',

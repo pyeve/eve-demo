@@ -15,12 +15,12 @@ Flask and MongoDB
 There is also a sample client application available. It uses the Requests
 library to consume the demo. In fact it has been quickly hacked together to
 reset the API every once in a while. Check it out at
-https://github.com/nicolaiarocci/eve-demo-client.
+https://github.com/pyeve/eve-demo-client.
  
 *Note*. The demo is currently running v0.0.4 of the Eve framework. Eve-Demo is
 only updated when major Eve updates are released. Please refer to the official
 Eve repository for an up-to-date features list. 
 
 .. _Eve: http://python-eve.org
-.. _run.py: https://github.com/nicolaiarocci/eve-demo/blob/master/run.py
-.. _settings.py: https://github.com/nicolaiarocci/eve-demo/blob/master/settings.py
+.. _run.py: https://github.com/pyeve/eve-demo/blob/master/run.py
+.. _settings.py: https://github.com/pyeve/eve-demo/blob/master/settings.py
