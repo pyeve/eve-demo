@@ -18,12 +18,12 @@
 from eve import Eve
 
 
-def piterpy(endpoint, response):
+def codemotion(endpoint, response):
     for document in response['_items']:
-        document['PITERPY'] = 'IS SO COOL!'
+        document['CODEMOTION'] = 'IS SO FREAKING COOL!'
 
 app = Eve()
-app.on_fetched_resource += piterpy
+app.on_fetched_resource += codemotion
 
 if __name__ == '__main__':
     app.run()
