@@ -20,7 +20,7 @@ from eve import Eve
 
 def codemotion(endpoint, response):
     for document in response['_items']:
-        document['CODEMOTION'] = 'IS SO FREAKING COOL!'
+        document['PYCON BELARUS'] = 'IS SO FREAKING COOL!'
 
 app = Eve()
 app.on_fetched_resource += codemotion
