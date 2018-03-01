@@ -18,12 +18,12 @@
 from eve import Eve
 
 
-def codemotion(endpoint, response):
+def pyconby(endpoint, response):
     for document in response['_items']:
         document['PYCON BELARUS'] = 'IS SO FREAKING COOL!'
 
 app = Eve()
-app.on_fetched_resource += codemotion
+app.on_fetched_resource += pyconby
 
 if __name__ == '__main__':
     app.run()
