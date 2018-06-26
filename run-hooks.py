@@ -18,12 +18,12 @@
 from eve import Eve
 
 
-def pyconby(endpoint, response):
+def pyconweb(endpoint, response):
     for document in response['_items']:
-        document['PYCON BELARUS'] = 'IS SO FREAKING COOL!'
+        document['PYCONWEB'] = 'IS SO COOL!'
 
 app = Eve()
-app.on_fetched_resource += pyconby
+app.on_fetched_resource += pyconweb
 
 if __name__ == '__main__':
     app.run()
